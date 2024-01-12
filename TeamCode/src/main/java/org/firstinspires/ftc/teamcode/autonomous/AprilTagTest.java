@@ -41,7 +41,7 @@ public class AprilTagTest extends LinearOpMode {
             waitForStart();
             resetRuntime();
             Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                    .lineToConstantHeading(new Vector2d(0,0))
+                    .lineToConstantHeading(new Vector2d(1,0))
 
                     .build();
             while (opModeIsActive()) {
