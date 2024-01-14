@@ -40,7 +40,7 @@ public class AprilTagTest extends LinearOpMode {
             boolean hello = false;
             waitForStart();
             resetRuntime();
-            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
+            Trajectory trajApril = drive.trajectoryBuilder(new Pose2d())
                     .lineToConstantHeading(new Vector2d(1,0))
 
                     .build();
@@ -56,7 +56,7 @@ public class AprilTagTest extends LinearOpMode {
                     telemetry.addData("y",y);
                     telemetry.update();
                     if (id == 4){
-                        traj1 = drive.trajectoryBuilder(new Pose2d())
+                        trajApril = drive.trajectoryBuilder(new Pose2d())
                                 .lineToConstantHeading(new Vector2d(x,y))
 
                                 .build();
@@ -66,7 +66,7 @@ public class AprilTagTest extends LinearOpMode {
 
 
                 if (hello){
-                    drive.followTrajectory(traj1);
+                    drive.followTrajectory(trajApril);
                 }
 
             }

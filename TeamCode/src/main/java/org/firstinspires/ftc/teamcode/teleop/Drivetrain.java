@@ -213,10 +213,10 @@ public class Drivetrain extends LinearOpMode {
             }
             if (gamepad2.right_bumper) {
                 intakeRotate.setPower(1);
-                intakeMove.setPower(1);
+                intakeMove.setPower(-1);
             } else if (gamepad2.left_bumper) {
                 intakeRotate.setPower(-1);
-                intakeMove.setPower(-1);
+                intakeMove.setPower(1);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);
                 intakeMove.setPower(0);

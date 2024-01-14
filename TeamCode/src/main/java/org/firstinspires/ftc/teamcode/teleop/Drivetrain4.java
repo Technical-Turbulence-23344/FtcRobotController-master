@@ -36,6 +36,7 @@ public class Drivetrain4 extends LinearOpMode {
         DistanceSensor dist = hardwareMap.get(DistanceSensor.class, "dist");
         DistanceSensor dist2 = hardwareMap.get(DistanceSensor.class, "dist2");
         RevBlinkinLedDriver lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
+        Servo stackKnocker = hardwareMap.servo.get("stackKnocker");
         int ticker = 0;
         int ticker2 = 0;
         int count = 2;
@@ -71,7 +72,7 @@ public class Drivetrain4 extends LinearOpMode {
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        double currentPositionLin = linearSlideLeft.getCurrentPosition()+100;
         boolean linearSlideMode = false;
         boolean prevState = false;
         // Reverse the right side motors. This may be wrong for your setup.
@@ -99,9 +100,9 @@ public class Drivetrain4 extends LinearOpMode {
             telemetry.addData("heading", Math.toDegrees(myPose.getHeading()));
 
 
-            telemetry.addData("x", myPose.getX());
-            telemetry.addData("y", myPose.getY());
-            telemetry.addData("heading", myPose.getHeading());
+            telemetry.addData("leftLinearSlide",linearSlideLeft.getCurrentPosition());
+            telemetry.addData("rightLinearSlide",linearSlideRight.getCurrentPosition());
+            telemetry.update();
             double rightOdoPos = (backRightMotor.getCurrentPosition() * -1);
             double leftOdoPos = (frontLeftMotor.getCurrentPosition());
             double sideOdoPos = (backLeftMotor.getCurrentPosition());
@@ -112,13 +113,13 @@ public class Drivetrain4 extends LinearOpMode {
 
 
             double turbo = 0.58 + 0.42 * gamepad1.right_trigger - 0.42 * gamepad1.left_trigger;
-
+            //Y button controller 1
             if (gamepad1.right_stick_y > 0.3 || gamepad1.right_stick_y < -0.3) {
                 y = -gamepad1.right_stick_y * turbo; // Remember, Y stick value is reversed
             } else {
                 y = 0;
             }
-
+            //X button controller 1
             if (gamepad1.right_stick_x > 0.5 || gamepad1.right_stick_x < -0.5) {
                 x = gamepad1.right_stick_x * 1.3 * turbo; // Counteract imperfect strafing
             } else {
@@ -141,10 +142,10 @@ public class Drivetrain4 extends LinearOpMode {
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
-            if (gamepad2.start) {
+            //Linear SLide button control 2
+            if (linearSlideLeft.getCurrentPosition()>currentPositionLin) {
                 linearSlideMode = true;
-            }
-            if (gamepad2.back) {
+            } else {
                 linearSlideMode = false;
             }
 
@@ -152,6 +153,7 @@ public class Drivetrain4 extends LinearOpMode {
             telemetry.addData("left", rightLinearSlidePos);
             telemetry.addData("rightPos", linearSlideRight.getCurrentPosition());
             telemetry.addData("leftPos", linearSlideLeft.getCurrentPosition());
+            //Linear Slide joystick controller 2
             if (gamepad2.right_stick_button) {
                 rightLinearSlidePos = linearSlideRight.getCurrentPosition();
                 leftLinearSlidePos = linearSlideLeft.getCurrentPosition();
@@ -164,7 +166,7 @@ public class Drivetrain4 extends LinearOpMode {
                 linearSlideLeft.setPower(gamepad2.right_trigger);
                 linearSlideRight.setPower(gamepad2.right_trigger);
 //
-            } else if (gamepad2.left_trigger != 0 && ((linearSlideRight.getCurrentPosition() < rightLinearSlidePos) || (rightLinearSlidePos == -288.87)) && ((linearSlideLeft.getCurrentPosition() < leftLinearSlidePos) || (leftLinearSlidePos == -288.87))) {
+            } else if (gamepad2.left_trigger != 0) {
                 linearSlideLeft.setPower(-gamepad2.left_trigger);
                 linearSlideRight.setPower(-gamepad2.left_trigger);
             } else if (linearSlideMode) {
@@ -215,22 +217,26 @@ public class Drivetrain4 extends LinearOpMode {
                 droneLauncher.setPosition(0.8);
             }
 
-            if (gamepad2.right_stick_y>0) {
-                intakeRotate.setPower(1);
-                intakeMove.setPower(gamepad2.right_stick_y);
-            } else if (gamepad2.left_stick_y<0) {
+            if (gamepad2.left_stick_y>0) {
                 intakeRotate.setPower(-1);
-                intakeMove.setPower(gamepad2.right_stick_y);
+                intakeMove.setPower(gamepad2.left_stick_y*0.3);
+            } else if (gamepad2.left_stick_y<0) {
+                intakeRotate.setPower(1);
+                intakeMove.setPower(gamepad2.left_stick_y*0.35);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);
-                intakeMove.setPower(0.3);
+                intakeMove.setPower(-0.13);
             } else if (gamepad2.dpad_down) {
                 intakeRotate.setPower(-0.6);
-                intakeMove.setPower(0.3);
+                intakeMove.setPower(-0.1);
             } else {
                 intakeRotate.setPower(0);
                 intakeMove.setPower(0);
             }
+           stackKnocker.setPosition(1);
+
+            telemetry.addData("servoPos",stackKnocker.getPosition());
+            telemetry.update();
 
 
             if (gamepad1.left_bumper) {
@@ -244,22 +250,10 @@ public class Drivetrain4 extends LinearOpMode {
             } else if (gamepad2.right_stick_y <= -0.5) {
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
             } else {
-                if (seeDistance < (0.5 + 1.85)) {
-                    if (seeDistance2 < (0.5 + 1.85)) {
-                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-                    }
-                } else {
                     lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
                 }
-            }
-            ticker++;
-            if (ticker % 5 == 0) {
-                seeDistance = dist.getDistance(DistanceUnit.INCH);
-            }
-            ticker2++;
-            if (ticker2 % 5 == 0) {
-                seeDistance2 = dist2.getDistance(DistanceUnit.INCH);
-            }
+
+           
 
 
             if (gamepad1.back) {
