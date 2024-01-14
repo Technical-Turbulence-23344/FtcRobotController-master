@@ -36,7 +36,7 @@ public class Drivetrain4 extends LinearOpMode {
         DistanceSensor dist = hardwareMap.get(DistanceSensor.class, "dist");
         DistanceSensor dist2 = hardwareMap.get(DistanceSensor.class, "dist2");
         RevBlinkinLedDriver lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
-        Servo stackKnocker = hardwareMap.servo.get("stackKnocker");
+        CRServo stackKnocker = hardwareMap.crservo.get("stackKnocker");
         int ticker = 0;
         int ticker2 = 0;
         int count = 2;
@@ -98,7 +98,7 @@ public class Drivetrain4 extends LinearOpMode {
             telemetry.addData("x", myPose.getX());
             telemetry.addData("y", myPose.getY());
             telemetry.addData("heading", Math.toDegrees(myPose.getHeading()));
-            telemetry.addData("servopos",stackKnocker.getPosition());
+
 
 
             telemetry.addData("leftLinearSlide",linearSlideLeft.getCurrentPosition());
@@ -234,13 +234,14 @@ public class Drivetrain4 extends LinearOpMode {
                 intakeRotate.setPower(0);
                 intakeMove.setPower(0);
             }
-            if (gamepad2.left_bumper) {
-                stackKnocker.setPosition(0.0);
-            }
             if (gamepad2.right_bumper){
-                stackKnocker.setPosition(0.5);
-
+                stackKnocker.setPower(0.4);
+            } else if (gamepad2.left_bumper){
+                stackKnocker.setPower(-0.4);
+            } else {
+                stackKnocker.setPower(0);
             }
+
 
 
 
