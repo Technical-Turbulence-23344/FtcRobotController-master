@@ -98,6 +98,7 @@ public class Drivetrain4 extends LinearOpMode {
             telemetry.addData("x", myPose.getX());
             telemetry.addData("y", myPose.getY());
             telemetry.addData("heading", Math.toDegrees(myPose.getHeading()));
+            telemetry.addData("servopos",stackKnocker.getPosition());
 
 
             telemetry.addData("leftLinearSlide",linearSlideLeft.getCurrentPosition());
@@ -233,10 +234,15 @@ public class Drivetrain4 extends LinearOpMode {
                 intakeRotate.setPower(0);
                 intakeMove.setPower(0);
             }
-           stackKnocker.setPosition(1);
+            if (gamepad2.left_bumper) {
+                stackKnocker.setPosition(0.0);
+            }
+            if (gamepad2.right_bumper){
+                stackKnocker.setPosition(0.5);
 
-            telemetry.addData("servoPos",stackKnocker.getPosition());
-            telemetry.update();
+            }
+
+
 
 
             if (gamepad1.left_bumper) {

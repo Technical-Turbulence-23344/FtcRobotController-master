@@ -29,8 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.autonomous;
 
-import android.util.Size;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -45,7 +43,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.VisionProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
@@ -59,12 +56,12 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RedFrontAprilTag")
+@Autonomous(name = "BlueFrontAprilTag")
 
-public class RedFrontAprilTag extends LinearOpMode {
+public class BlueFrontAprilTag extends LinearOpMode {
 
 
-    int auto =1;
+    int auto =3;
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
@@ -81,13 +78,13 @@ public class RedFrontAprilTag extends LinearOpMode {
      * The variable to store our instance of the vision portal.
      */
     private VisionPortal myVisionPortal;
-    private static final String TFOD_MODEL_ASSET = "Meet1Red.tflite";
+    private static final String TFOD_MODEL_ASSET = "Meet1Blue.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/myCustomModel.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-       "red",
+       "blue",
     };
 
     /**
@@ -120,23 +117,26 @@ public class RedFrontAprilTag extends LinearOpMode {
         drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
 
         Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(-28.5,-9,Math.toRadians(90)))
+                .lineToConstantHeading(new Vector2d(-27,-6.6))
 
                 .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(27,5))
-
+                .lineToConstantHeading(new Vector2d(15,0))
                 .build();
         Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(1,0,Math.toRadians(179)))
+                .lineToSplineHeading (new Pose2d(0,-10,Math.toRadians(90)))
+
+                .build();
+        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-8,9))
 
                 .build();
 
         Trajectory traj1e = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(16,0,Math.toRadians(1)))
+                .lineToSplineHeading (new Pose2d(11,0,Math.toRadians(1)))
 
                 .build();
         Trajectory traj3e = drive.trajectoryBuilder(new Pose2d())
@@ -144,24 +144,24 @@ public class RedFrontAprilTag extends LinearOpMode {
                 .lineToSplineHeading (new Pose2d(11,0,Math.toRadians(1)))
 
                 .build();
-        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
+        Trajectory trajd = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(-3,0))
 
                 .build();
         Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,30))
+                .lineToConstantHeading (new Vector2d(0,-16.5))
 
                 .build();
         Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,23))
+                .lineToConstantHeading (new Vector2d(0,-23))
 
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,19))
+                .lineToConstantHeading (new Vector2d(0,-29))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
@@ -182,29 +182,26 @@ public class RedFrontAprilTag extends LinearOpMode {
                 .build();
         Trajectory traj2c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-89)))
+                .lineToSplineHeading (new Pose2d(0,-10,Math.toRadians(90)))
 
                 .build();
         Trajectory traj2d = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(-10,-11))
+                .lineToConstantHeading (new Vector2d(-15,9))
 
                 .build();
         Trajectory traj3a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-27,5.6))
+                .lineToSplineHeading(new Pose2d(-27,7.3,Math.toRadians(-90)))
 
                 .build();
         Trajectory traj3b = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(15,0))
+
+                .lineToConstantHeading (new Vector2d(27,-3.5))
+
                 .build();
         Trajectory traj3c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-90)))
-
-                .build();
-        Trajectory traj3d = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(-8,-7))
+                .lineToSplineHeading (new Pose2d(10,1.5,Math.toRadians(-177)))
 
                 .build();
 
@@ -228,12 +225,12 @@ public class RedFrontAprilTag extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            if (auto == 2 || auto == 3) {
+            if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();
             } else {
                 resetRuntime();
-                while (getRuntime() < 1 && auto == 1) {
+                while (getRuntime() < 1 && auto == 3) {
                     telemetryTfod();
 
                     telemetry.update();
@@ -257,6 +254,9 @@ public class RedFrontAprilTag extends LinearOpMode {
             sleep(300);
             drive.followTrajectory(traj1c);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
+            drive.followTrajectory(traj1d);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
@@ -266,9 +266,9 @@ public class RedFrontAprilTag extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 4) {
+                        if (idforapril == 1) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast-1))
 
                                     .build();
                             hello = true;
@@ -284,7 +284,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            drive.followTrajectory(traj1d);
+            drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
             sleep(2300);
@@ -331,7 +331,7 @@ public class RedFrontAprilTag extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 5) {
+                        if (idforapril == 2) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
                                     .lineToConstantHeading(new Vector2d(xforlast, yforlast))
 
@@ -349,7 +349,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            drive.followTrajectory(traj1d);
+            drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
             sleep(2300);
@@ -383,9 +383,6 @@ public class RedFrontAprilTag extends LinearOpMode {
             sleep(300);
             drive.followTrajectory(traj3c);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj3d);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
@@ -395,9 +392,9 @@ public class RedFrontAprilTag extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 6) {
+                        if (idforapril == 3) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast+1))
 
                                     .build();
                             hello = true;
@@ -413,7 +410,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            drive.followTrajectory(traj1d);
+            drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
             sleep(2300);
@@ -469,11 +466,11 @@ public class RedFrontAprilTag extends LinearOpMode {
         }   // end for() loop
         if (currentRecognitions.size()!=0){
             for (Recognition recognition : currentRecognitions) {
-                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.9)){
-                    if (((recognition.getLeft()+ recognition.getRight())/2)<300){
-                        auto=2;
+                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.87)){
+                    if (((recognition.getLeft()+ recognition.getRight())/2)<200){
+                        auto=1;
                     } else {
-                        auto = 3;
+                        auto = 2;
                     }
 
                 } else {
@@ -485,7 +482,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             }   // end for() loop
             telemetry.addData("auto",auto);
         }else {
-            auto =1;
+            auto =3;
         }
 
         telemetry.addData("auto",auto);

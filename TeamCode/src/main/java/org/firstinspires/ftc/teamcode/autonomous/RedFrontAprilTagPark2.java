@@ -29,8 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.autonomous;
 
-import android.util.Size;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -45,7 +43,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.VisionProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
@@ -59,9 +56,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RedFrontAprilTag")
+@Autonomous(name = "RedFrontAprilTagPark2")
 
-public class RedFrontAprilTag extends LinearOpMode {
+public class RedFrontAprilTagPark2 extends LinearOpMode {
 
 
     int auto =1;
@@ -161,17 +158,12 @@ public class RedFrontAprilTag extends LinearOpMode {
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,19))
+                .lineToConstantHeading (new Vector2d(0,-30))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(-10,0))
-
-                .build();
-        Trajectory traj3g = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(-15,0))
 
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
@@ -421,7 +413,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             pixelIn.setPower(-1);
             sleep(800);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1e);
+            drive.followTrajectory(traj3e);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
@@ -434,7 +426,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             sleep(1300);
             intakeMove.setPower(0);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj3g);
+            drive.followTrajectory(traj1g);
 
         }
 
