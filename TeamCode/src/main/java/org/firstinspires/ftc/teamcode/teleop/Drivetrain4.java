@@ -19,6 +19,7 @@ public class Drivetrain4 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Declare our motors
         // Make sure your ID's match your configuration
+        boolean use =false;
         CRServo linActServo = hardwareMap.crservo.get("linActServo");
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
@@ -40,8 +41,8 @@ public class Drivetrain4 extends LinearOpMode {
         int ticker = 0;
         int ticker2 = 0;
         int count = 2;
-        double seeDistance2 = dist.getDistance(DistanceUnit.INCH);
-        double seeDistance = dist.getDistance(DistanceUnit.INCH);
+        double seeDistance2 = 10;
+        double seeDistance = 10;
         double x = 0;
         double rightLinearSlidePos = -288.87;
         double leftLinearSlidePos = -288.87;
@@ -179,7 +180,7 @@ public class Drivetrain4 extends LinearOpMode {
             }
             telemetry.update();
             if (gamepad2.a) {
-                intakeMotor.setPower(0.5);
+                intakeMotor.setPower(0.9);
                 pixelIn.setPower(1);
                 pixelOut.setPosition(.8);
                 intakeRotate.setPower(-0.5);
@@ -246,8 +247,8 @@ public class Drivetrain4 extends LinearOpMode {
 
 
 
-            if (gamepad1.left_bumper) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+            if (gamepad1.right_bumper) {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
             } else if (gamepad2.right_stick_x >= 0.5) {
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
             } else if (gamepad2.right_stick_x <= -0.5) {
@@ -311,6 +312,7 @@ public class Drivetrain4 extends LinearOpMode {
                     }
 
                 }
+
 
 
             }

@@ -4,6 +4,7 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
 @Autonomous
+
 public class AprilTagTest extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -36,6 +38,7 @@ public class AprilTagTest extends LinearOpMode {
         drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
         double x = 0;
         double y = 0;
+        double z = 0;
         int id = 0;
             boolean hello = false;
             waitForStart();
@@ -52,12 +55,13 @@ public class AprilTagTest extends LinearOpMode {
                         id = tag.id;
                      x = -1*tag.ftcPose.y;
                      y = tag.ftcPose.x;
+                     z = tag.ftcPose.yaw;
                     telemetry.addData("x",x);
                     telemetry.addData("y",y);
                     telemetry.update();
                     if (id == 4){
                         trajApril = drive.trajectoryBuilder(new Pose2d())
-                                .lineToConstantHeading(new Vector2d(x,y))
+                                .lineToSplineHeading(new Pose2d(x,y,z))
 
                                 .build();
                         hello = true;

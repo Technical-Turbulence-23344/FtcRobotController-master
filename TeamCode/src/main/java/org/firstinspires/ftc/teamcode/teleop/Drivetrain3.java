@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -14,6 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @TeleOp
+
+
 public class Drivetrain3 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -200,7 +203,7 @@ public class Drivetrain3 extends LinearOpMode {
                 closed = false;
             }
             if (gamepad2.y){
-                pixelOut.setPosition(0);
+                pixelIn.setPower(1);
             }
 
             if (gamepad1.start) {

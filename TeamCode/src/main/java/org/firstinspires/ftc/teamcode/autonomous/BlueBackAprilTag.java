@@ -139,6 +139,12 @@ public class BlueBackAprilTag extends LinearOpMode {
                 .lineToConstantHeading (new Vector2d(9,0))
 
                 .build();
+        Trajectory trajz = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading (new Vector2d(0,-3.2),
+                        SampleMecanumDrive.getVelocityConstraint(13,2.5,10.69),
+                        SampleMecanumDrive.getAccelerationConstraint(30)
+                )
+                .build();
         Trajectory traj1r = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToSplineHeading(new Pose2d(0,-25.5,Math.toRadians(-90)))
@@ -146,8 +152,11 @@ public class BlueBackAprilTag extends LinearOpMode {
                 .build();
         Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(-1,0,Math.toRadians(83)))
+                .lineToSplineHeading (new Pose2d(-1,0,Math.toRadians(92)),
+                        SampleMecanumDrive.getVelocityConstraint(20,6.7464,10.69),
+                        SampleMecanumDrive.getAccelerationConstraint(50)
 
+                )
                 .build();
         Trajectory traj2c = drive.trajectoryBuilder(new Pose2d())
 
@@ -170,15 +179,15 @@ public class BlueBackAprilTag extends LinearOpMode {
 
         Trajectory traj1x = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(0,15))
+                .lineToSplineHeading(new Pose2d(0,15,Math.toRadians(1.3)))
                 .build();
         Trajectory traj2x = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(0,22))
+                .lineToSplineHeading(new Pose2d(0,22,Math.toRadians(1.6)))
                 .build();
         Trajectory traj3x = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(0,28))
+                .lineToSplineHeading(new Pose2d(0,28,Math.toRadians(2)))
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
 
@@ -302,6 +311,9 @@ public class BlueBackAprilTag extends LinearOpMode {
             drive.followTrajectory(traj1c);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
+            drive.followTrajectory(trajz);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
             drive.followTrajectory(trajd);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
@@ -318,7 +330,7 @@ public class BlueBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 1) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast-2))
+                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0.5))
 
                                     .build();
                             hello = true;
@@ -362,6 +374,9 @@ public class BlueBackAprilTag extends LinearOpMode {
             drive.followTrajectory(traj1c);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
+            drive.followTrajectory(trajz);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
             drive.followTrajectory(traj1d);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
@@ -378,7 +393,7 @@ public class BlueBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 2) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0.5))
 
                                     .build();
                             hello = true;
@@ -394,10 +409,10 @@ public class BlueBackAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
+            frontLeftMotor.setPower(-0.3);
+            frontRightMotor.setPower(-0.3);
+            backLeftMotor.setPower(-0.3);
+            backRightMotor.setPower(-0.3);
             sleep(3000);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
@@ -419,6 +434,9 @@ public class BlueBackAprilTag extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
             drive.followTrajectory(traj1c);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
+            drive.followTrajectory(trajz);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
             drive.followTrajectory(traj1d);
@@ -453,10 +471,10 @@ public class BlueBackAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
+            frontLeftMotor.setPower(-0.3);
+            frontRightMotor.setPower(-0.3);
+            backLeftMotor.setPower(-0.3);
+            backRightMotor.setPower(-0.3);
             sleep(3000);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
