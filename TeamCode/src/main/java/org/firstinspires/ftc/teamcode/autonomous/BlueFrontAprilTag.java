@@ -115,13 +115,25 @@ public class BlueFrontAprilTag extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+        Trajectory t3 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-12,0))
+
+                .build();
+        Trajectory t2 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,0))
+
+                .build();
+        Trajectory t1 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,0))
+
+                .build();
 
         Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-27,-6.6))
+                .lineToConstantHeading(new Vector2d(-22,-6.6))
 
                 .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(15,0))
+                .lineToConstantHeading(new Vector2d(10,0))
                 .build();
         Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
 
@@ -268,7 +280,7 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                         if (idforapril == 1) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast-1))
+                                    .lineToConstantHeading(new Vector2d(xforlast+2, yforlast-1))
 
                                     .build();
                             hello = true;
@@ -282,15 +294,25 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t1);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
@@ -333,7 +355,7 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                         if (idforapril == 2) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast+2, yforlast))
 
                                     .build();
                             hello = true;
@@ -347,15 +369,25 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t2);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
@@ -394,7 +426,7 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                         if (idforapril == 3) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast+1))
+                                    .lineToConstantHeading(new Vector2d(xforlast+2, yforlast+1))
 
                                     .build();
                             hello = true;
@@ -408,15 +440,25 @@ public class BlueFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t3);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(trajd);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);

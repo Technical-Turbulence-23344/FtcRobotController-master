@@ -123,6 +123,18 @@ public class RedFrontAprilTag extends LinearOpMode {
                 .lineToSplineHeading(new Pose2d(-28.5,-9,Math.toRadians(90)))
 
                 .build();
+        Trajectory t3 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-12,-3))
+
+                .build();
+        Trajectory t2 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,-0.5))
+
+                .build();
+        Trajectory t1 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,0))
+
+                .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(27,5))
@@ -175,7 +187,7 @@ public class RedFrontAprilTag extends LinearOpMode {
 
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-31,0))
+                .lineToConstantHeading(new Vector2d(-33,0))
                 .build();
         Trajectory traj2b = drive.trajectoryBuilder(new Pose2d())
                 .lineToConstantHeading(new Vector2d(15,0))
@@ -282,15 +294,25 @@ public class RedFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t1);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
@@ -347,15 +369,25 @@ public class RedFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t2);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
@@ -371,6 +403,7 @@ public class RedFrontAprilTag extends LinearOpMode {
             intakeMove.setPower(0);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1g);
+
 
 
         } if (auto ==3){
@@ -411,15 +444,25 @@ public class RedFrontAprilTag extends LinearOpMode {
 
                 }
             }
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t3);
+            }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);
+            sleep(1300);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(-1);
+            sleep(1000);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
+            sleep(400);
+            intakeRotate.setPower(1);
+            sleep(400);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
             pixelIn.setPower(0);

@@ -353,14 +353,27 @@ public class BlueBackAprilTag extends LinearOpMode {
             sleep(3000);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);;
+            sleep(2300);
+            intakeRotate.setPower(-0.7);
+            intakeMove.setPower(-0.5);
+            sleep(300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
             sleep(800);
-            intakeMove.setPower(1);
-            sleep(1300);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(1);
+            sleep(1000);
+            pixelIn.setPower(0);
             intakeMove.setPower(0);
-
+            intakeRotate.setPower(0);
+            sleep(200);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(0.5);
+            sleep(1000);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
 
         }
         if (auto ==2){
@@ -393,7 +406,7 @@ public class BlueBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 2) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0.5))
+                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0))
 
                                     .build();
                             hello = true;
@@ -409,20 +422,35 @@ public class BlueBackAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            frontLeftMotor.setPower(-0.3);
-            frontRightMotor.setPower(-0.3);
-            backLeftMotor.setPower(-0.3);
-            backRightMotor.setPower(-0.3);
+            frontLeftMotor.setPower(-0.2);
+            frontRightMotor.setPower(-0.2);
+            backLeftMotor.setPower(-0.2);
+            backRightMotor.setPower(-0.2);
             sleep(3000);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);;
+            sleep(2300);
+            intakeRotate.setPower(-0.7);
+            intakeMove.setPower(-0.5);
+            sleep(300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
             sleep(800);
-            intakeMove.setPower(1);
-            sleep(1300);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(1);
+            sleep(1000);
+            pixelIn.setPower(0);
             intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            sleep(200);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(0.5);
+            sleep(1000);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+
 
 
         } if (auto ==3){
@@ -455,7 +483,7 @@ public class BlueBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 3) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+1.5))
+                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0))
 
                                     .build();
                             hello = true;
@@ -471,20 +499,34 @@ public class BlueBackAprilTag extends LinearOpMode {
             }
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
-            frontLeftMotor.setPower(-0.3);
-            frontRightMotor.setPower(-0.3);
-            backLeftMotor.setPower(-0.3);
-            backRightMotor.setPower(-0.3);
+            frontLeftMotor.setPower(-0.2);
+            frontRightMotor.setPower(-0.2);
+            backLeftMotor.setPower(-0.2);
+            backRightMotor.setPower(-0.2);
             sleep(3000);
             intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(2300);;
+            sleep(2300);
+            intakeRotate.setPower(-0.7);
+            intakeMove.setPower(-0.5);
+            sleep(300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
             sleep(800);
-            intakeMove.setPower(1);
-            sleep(1300);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(-0.5);
+            intakeRotate.setPower(1);
+            sleep(1000);
+            pixelIn.setPower(0);
             intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            sleep(200);
+            pixelIn.setPower(-1);
+            intakeMove.setPower(0.5);
+            sleep(1000);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
 
         }
 

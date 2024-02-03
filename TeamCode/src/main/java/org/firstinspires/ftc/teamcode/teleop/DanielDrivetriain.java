@@ -10,11 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @TeleOp
-public class Drivetrain4 extends LinearOpMode {
+public class DanielDrivetriain extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -232,12 +231,12 @@ public class Drivetrain4 extends LinearOpMode {
                 droneLauncher.setPosition(0.8);
             }
 
-            if (gamepad2.left_stick_y>0) {
+            if (gamepad2.left_stick_y<0) {
                 intakeRotate.setPower(-1);
-                intakeMove.setPower(gamepad2.left_stick_y*0.3);
-            } else if (gamepad2.left_stick_y<0) {
+                intakeMove.setPower(gamepad2.left_stick_y*-0.3);
+            } else if (gamepad2.left_stick_y>0) {
                 intakeRotate.setPower(1);
-                intakeMove.setPower(gamepad2.left_stick_y*0.35);
+                intakeMove.setPower(gamepad2.left_stick_y*-0.35);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);
                 intakeMove.setPower(-0.13);

@@ -35,7 +35,6 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -43,6 +42,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDir
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -57,12 +57,12 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RedBackAprilTag")
+@Autonomous(name = "RFAPT")
 
-public class RedBackAprilTag extends LinearOpMode {
+public class RFAPT extends LinearOpMode {
 
 
-    int auto =3;
+    int auto =1;
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
@@ -105,20 +105,7 @@ public class RedBackAprilTag extends LinearOpMode {
         CRServo intakeRotate = hardwareMap.crservo.get("intakeRotate");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
         CRServo pixelIn = hardwareMap.crservo.get("pixelIn");
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         intakeMove.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double xforlast = 0;
         double yforlast = 0;
@@ -127,44 +114,58 @@ public class RedBackAprilTag extends LinearOpMode {
 
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        Pose2d startPose =new Pose2d(0, 0, Math.toRadians(0));
 
-        drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+        drive.setPoseEstimate(startPose);
+
+        TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(90)))
+                .forward(6)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-24,20, Math.toRadians(-90)))
+                .build();
+        TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-28.5,-10, Math.toRadians(90)))
+                .forward(6)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-31,20, Math.toRadians(-90)))
+                .build();
+        TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-28.5,11, Math.toRadians(90)))
+                .forward(8)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-16,20, Math.toRadians(-90)))
+                .build();
+
 
         Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-22,-6.6))
+                .lineToSplineHeading(new Pose2d(-28.5,-9,Math.toRadians(90)))
+
+                .build();
+        Trajectory t3 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-12,-3))
+
+                .build();
+        Trajectory t2 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,-0.5))
+
+                .build();
+        Trajectory t1 = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-14,0))
 
                 .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading (new Pose2d(-1,0,Math.toRadians(-92)),
-                        SampleMecanumDrive.getVelocityConstraint(20,6.7464,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(50)
 
-                        )
-                .build();
-        Trajectory trajz = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading (new Vector2d(0,2.5),
-                        SampleMecanumDrive.getVelocityConstraint(13,2.5,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                )
+                .lineToConstantHeading (new Vector2d(27,5))
+
                 .build();
         Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(-75,0))
+                .lineToSplineHeading (new Pose2d(1,0,Math.toRadians(179)))
 
-                .build();
-        Trajectory trajcc = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading(new Vector2d(-78.5,0))
-
-                .build();
-        Trajectory traj3c = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading(new Vector2d(-82,0))
-
-                .build();
-        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading(new Vector2d(18,6.6))
                 .build();
 
         Trajectory traj1e = drive.trajectoryBuilder(new Pose2d())
@@ -172,42 +173,29 @@ public class RedBackAprilTag extends LinearOpMode {
                 .lineToSplineHeading (new Pose2d(16,0,Math.toRadians(1)))
 
                 .build();
-        Trajectory traj1x = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToSplineHeading(new Pose2d(0,-28,Math.toRadians(-5)))
-                .build();
-        Trajectory traj2x = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToSplineHeading(new Pose2d(0,-21,Math.toRadians(-5)))
-                .build();
-        Trajectory traj3x = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToSplineHeading(new Pose2d(0,-15,Math.toRadians(-5)))
-
-                .build();
         Trajectory traj3e = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToSplineHeading (new Pose2d(11,0,Math.toRadians(1)))
 
                 .build();
-        Trajectory trajd = drive.trajectoryBuilder(new Pose2d())
+        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(-1,0))
+                .lineToConstantHeading (new Vector2d(-3,0))
 
                 .build();
         Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,29.5))
+                .lineToConstantHeading (new Vector2d(0,30))
 
                 .build();
         Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,-23))
+                .lineToConstantHeading (new Vector2d(0,23))
 
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,-29))
+                .lineToConstantHeading (new Vector2d(0,19))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
@@ -221,24 +209,37 @@ public class RedBackAprilTag extends LinearOpMode {
 
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-31,0))
+                .lineToConstantHeading(new Vector2d(-33,0))
+                .build();
+        Trajectory traj2b = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(15,0))
+                .build();
+
+        Trajectory traj2c = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-89)))
+
                 .build();
         Trajectory traj2d = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(27,0))
+
+                .lineToConstantHeading (new Vector2d(-10,-11))
+
                 .build();
         Trajectory traj3a = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(-27,7.3,Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-27,5.6))
 
                 .build();
         Trajectory traj3b = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(7.3,0),
-                        SampleMecanumDrive.getVelocityConstraint(13,2.5,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                )
+                .lineToConstantHeading(new Vector2d(15,0))
+                .build();
+        Trajectory traj3c = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-90)))
 
                 .build();
-        Trajectory traj3r = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(0,23.5,Math.toRadians(90)))
+        Trajectory traj3d = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-8,-7))
 
                 .build();
 
@@ -261,13 +262,13 @@ public class RedBackAprilTag extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(6000);
-            if (auto == 2 || auto == 1) {
+
+            if (auto == 2 || auto == 3) {
                 telemetry.addData("auto", auto);
                 telemetry.update();
             } else {
                 resetRuntime();
-                while (getRuntime() < 1 && auto == 3) {
+                while (getRuntime() < 1 && auto == 1) {
                     telemetryTfod();
 
                     telemetry.update();
@@ -282,24 +283,7 @@ public class RedBackAprilTag extends LinearOpMode {
 
         if (auto ==1){
 
-            drive.followTrajectory(traj1a);
-            sleep(500);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1d);
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj1b);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(trajz);
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(trajcc);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj1x);
+            drive.followTrajectorySequence(trajSeq1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
             while (getRuntime()<1) {
@@ -312,7 +296,7 @@ public class RedBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 4) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0.5))
+                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
 
                                     .build();
                             hello = true;
@@ -326,59 +310,38 @@ public class RedBackAprilTag extends LinearOpMode {
 
                 }
             }
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(3000);
-            intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
-            sleep(2300);
-            intakeRotate.setPower(-0.7);
-            intakeMove.setPower(-0.5);
-            sleep(300);
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t1);
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(traj1d);
+            }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(1000);
-            pixelIn.setPower(0);
-            intakeMove.setPower(0);
-            intakeRotate.setPower(0);
             sleep(200);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(0.5);
-            sleep(1000);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
-
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1f);
+            intakeMove.setPower(1);
+            sleep(1300);
+            intakeMove.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1g);
 
 
         }
         if (auto ==2){
-            drive.followTrajectory(traj2a);
-            sleep(500);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj2d);
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj1b);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(trajz);
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1c);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj2x);
+            drive.followTrajectorySequence(trajSeq2);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
             while (getRuntime()<1) {
@@ -391,75 +354,52 @@ public class RedBackAprilTag extends LinearOpMode {
 
                         if (idforapril == 5) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
 
                                     .build();
                             hello = true;
                         }
-                        if (hello) {
-                            drive.followTrajectory(trajApril);
-                        }
                     }
 
 
-
+                    if (hello) {
+                        drive.followTrajectory(trajApril);
+                    }
 
                 }
             }
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(3000);
-            intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
-            sleep(2300);
-            intakeRotate.setPower(-0.7);
-            intakeMove.setPower(-0.5);
-            sleep(300);
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t2);
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(traj1d);
+            }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(1000);
-            pixelIn.setPower(0);
-            intakeMove.setPower(0);
-            intakeRotate.setPower(0);
             sleep(200);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(0.5);
-            sleep(1000);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj2f);
+            intakeMove.setPower(1);
+            sleep(1300);
+            intakeMove.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1g);
+
 
 
         } if (auto ==3){
-            drive.followTrajectory(traj3a);
-            sleep(500);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj3b);
-            sleep(500);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj3r);
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj1b);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(trajz);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj3c);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(300);
-            drive.followTrajectory(traj3x);
+            drive.followTrajectorySequence(trajSeq3);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
             while (getRuntime()<1) {
@@ -471,58 +411,48 @@ public class RedBackAprilTag extends LinearOpMode {
                         yforlast = tag.ftcPose.x;
 
                         if (idforapril == 6) {
-                            // You have to fix this part of the code. It needs to go more left
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+3, yforlast+0))
+                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
 
                                     .build();
                             hello = true;
                         }
                     }
-                    if (hello){
+
+
+                    if (hello) {
                         drive.followTrajectory(trajApril);
                     }
 
-
-
-
-
-
-
                 }
-
             }
-
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(3000);
-            intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
-            sleep(2300);
-            intakeRotate.setPower(-0.7);
-            intakeMove.setPower(-0.5);
-            sleep(300);
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t3);
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(traj1d);
+            }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            sleep(800);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(-0.5);
             intakeRotate.setPower(1);
-            sleep(1000);
-            pixelIn.setPower(0);
-            intakeMove.setPower(0);
-            intakeRotate.setPower(0);
             sleep(200);
-            pixelIn.setPower(-1);
-            intakeMove.setPower(0.5);
-            sleep(1000);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1e);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj3f);
+            intakeMove.setPower(1);
+            sleep(1300);
+            intakeMove.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj3g);
 
         }
 
@@ -557,11 +487,11 @@ public class RedBackAprilTag extends LinearOpMode {
         }   // end for() loop
         if (currentRecognitions.size()!=0){
             for (Recognition recognition : currentRecognitions) {
-                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.87)){
-                    if (((recognition.getLeft()+ recognition.getRight())/2)<200){
-                        auto=1;
+                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.9)){
+                    if (((recognition.getLeft()+ recognition.getRight())/2)<300){
+                        auto=2;
                     } else {
-                        auto = 2;
+                        auto = 3;
                     }
 
                 } else {
@@ -573,7 +503,7 @@ public class RedBackAprilTag extends LinearOpMode {
             }   // end for() loop
             telemetry.addData("auto",auto);
         }else {
-            auto =3;
+            auto =1;
         }
 
         telemetry.addData("auto",auto);

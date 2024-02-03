@@ -20,33 +20,17 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Autonomous
 public class testRR extends LinearOpMode {
-    BNO055IMU imu;
-    Orientation angles;
+
     @Override
     public void runOpMode() {
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
 
-        imu =hardwareMap.get(BNO055IMU.class,"imu");
-        imu.initialize(parameters);
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                .splineToLinearHeading(new Pose2d(24,24, Math.toRadians(90)), Math.toRadians(0))
-
-
-                .build();
 
         waitForStart();
 
         if(isStopRequested()) return;
 
         while (opModeIsActive()){
-            angles =imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            telemetry.addData("heading",angles.firstAngle);
-            telemetry.addData("hing",angles.secondAngle);
-            telemetry.addData("ading",angles.thirdAngle);
-            telemetry.update();
+
         }
     }
 }
