@@ -57,12 +57,12 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RFAPT")
+@Autonomous(name = "BFAPT")
 
-public class RFAPT extends LinearOpMode {
+public class BFAPT extends LinearOpMode {
 
 
-    int auto =1;
+    int auto =3;
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
@@ -79,13 +79,13 @@ public class RFAPT extends LinearOpMode {
      * The variable to store our instance of the vision portal.
      */
     private VisionPortal myVisionPortal;
-    private static final String TFOD_MODEL_ASSET = "Meet1Red.tflite";
+    private static final String TFOD_MODEL_ASSET = "Meet1Blue.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/myCustomModel.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-       "red",
+       "blue",
     };
 
     /**
@@ -114,72 +114,65 @@ public class RFAPT extends LinearOpMode {
 
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
         Pose2d startPose =new Pose2d(0, 0, Math.toRadians(0));
 
         drive.setPoseEstimate(startPose);
-
-        TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(90)))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
-                .lineToSplineHeading(new Pose2d(-25,20, Math.toRadians(-90)))
-                .build();
-        TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-28.5,-10, Math.toRadians(90)))
-                .forward(6)
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
-                .lineToSplineHeading(new Pose2d(-31,20, Math.toRadians(-90)))
-                .build();
-        TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-28.5,11, Math.toRadians(90)))
-                .forward(8)
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
-                .lineToSplineHeading(new Pose2d(-16,20, Math.toRadians(-90)))
-                .build();
-        TrajectorySequence trajSeq2back =drive.trajectorySequenceBuilder(startPose)
-                .forward(12)
-                .lineToConstantHeading(new Vector2d(6,26))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(1.3, () -> intakeMove.setPower(0))
-                .forward(92)
-                .build();
-
-
-        Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(-28.5,-9,Math.toRadians(90)))
-
-                .build();
         Trajectory t3 = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-12,-3))
+                .lineToConstantHeading(new Vector2d(-12,0))
 
                 .build();
         Trajectory t2 = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-14,-0.5))
+                .lineToConstantHeading(new Vector2d(-14,0))
 
                 .build();
         Trajectory t1 = drive.trajectoryBuilder(new Pose2d())
                 .lineToConstantHeading(new Vector2d(-14,0))
 
                 .build();
+        TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(-90)))
+                .forward(6)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-24,-24, Math.toRadians(90)))
+                .build();
+        TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-28.5,-12, Math.toRadians(-90)))
+                .forward(6)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-16,-24, Math.toRadians(90)))
+                .build();
+        TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
+                .forward(6)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .lineToSplineHeading(new Pose2d(-30,-24, Math.toRadians(90)))
+                .build();
+
+        Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(-22,-6.6))
+
+                .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(27,5))
-
+                .lineToConstantHeading(new Vector2d(10,0))
                 .build();
         Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(1,0,Math.toRadians(179)))
+                .lineToSplineHeading (new Pose2d(0,-10,Math.toRadians(90)))
+
+                .build();
+        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-8,9))
 
                 .build();
 
         Trajectory traj1e = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(16,0,Math.toRadians(1)))
+                .lineToSplineHeading (new Pose2d(11,0,Math.toRadians(1)))
 
                 .build();
         Trajectory traj3e = drive.trajectoryBuilder(new Pose2d())
@@ -187,24 +180,24 @@ public class RFAPT extends LinearOpMode {
                 .lineToSplineHeading (new Pose2d(11,0,Math.toRadians(1)))
 
                 .build();
-        Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
+        Trajectory trajd = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(-3,0))
 
                 .build();
         Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,30))
+                .lineToConstantHeading (new Vector2d(0,-16.5))
 
                 .build();
         Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,23))
+                .lineToConstantHeading (new Vector2d(0,-23))
 
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,19))
+                .lineToConstantHeading (new Vector2d(0,-29))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
@@ -218,37 +211,33 @@ public class RFAPT extends LinearOpMode {
 
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-33,0))
+                .lineToConstantHeading(new Vector2d(-31,0))
                 .build();
         Trajectory traj2b = drive.trajectoryBuilder(new Pose2d())
                 .lineToConstantHeading(new Vector2d(15,0))
                 .build();
-
         Trajectory traj2c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-89)))
+                .lineToSplineHeading (new Pose2d(0,-10,Math.toRadians(90)))
 
                 .build();
         Trajectory traj2d = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(-10,-11))
+                .lineToConstantHeading (new Vector2d(-15,9))
 
                 .build();
         Trajectory traj3a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-27,5.6))
+                .lineToSplineHeading(new Pose2d(-27,7.3,Math.toRadians(-90)))
 
                 .build();
         Trajectory traj3b = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(15,0))
+
+                .lineToConstantHeading (new Vector2d(27,-3.5))
+
                 .build();
         Trajectory traj3c = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToSplineHeading (new Pose2d(0,10,Math.toRadians(-90)))
-
-                .build();
-        Trajectory traj3d = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(-8,-7))
+                .lineToSplineHeading (new Pose2d(10,1.5,Math.toRadians(-177)))
 
                 .build();
 
@@ -272,12 +261,12 @@ public class RFAPT extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            if (auto == 2 || auto == 3) {
+            if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();
             } else {
                 resetRuntime();
-                while (getRuntime() < 1 && auto == 1) {
+                while (getRuntime() < 1 && auto == 3) {
                     telemetryTfod();
 
                     telemetry.update();
@@ -295,6 +284,7 @@ public class RFAPT extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
+            resetRuntime();
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
                     for (int i = 0; i < aprilTag.getDetections().size(); i++) {
@@ -303,9 +293,9 @@ public class RFAPT extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 4) {
+                        if (idforapril == 1) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast-1))
 
                                     .build();
                             hello = true;
@@ -325,8 +315,9 @@ public class RFAPT extends LinearOpMode {
                 drive.followTrajectory(t1);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
                 sleep(200);
-                drive.followTrajectory(traj1d);
+                drive.followTrajectory(trajd);
             }
+
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
             intakeRotate.setPower(1);
@@ -361,7 +352,7 @@ public class RFAPT extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 5) {
+                        if (idforapril == 2) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
                                     .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
 
@@ -383,7 +374,7 @@ public class RFAPT extends LinearOpMode {
                 drive.followTrajectory(t2);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
                 sleep(200);
-                drive.followTrajectory(traj1d);
+                drive.followTrajectory(trajd);
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -406,8 +397,6 @@ public class RFAPT extends LinearOpMode {
             drive.followTrajectory(traj1g);
 
 
-
-
         } if (auto ==3){
             drive.followTrajectorySequence(trajSeq3);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
@@ -420,9 +409,9 @@ public class RFAPT extends LinearOpMode {
                         xforlast = -1 * tag.ftcPose.y;
                         yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 6) {
+                        if (idforapril == 3) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-3.5, yforlast+1))
 
                                     .build();
                             hello = true;
@@ -442,7 +431,7 @@ public class RFAPT extends LinearOpMode {
                 drive.followTrajectory(t3);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
                 sleep(200);
-                drive.followTrajectory(traj1d);
+                drive.followTrajectory(trajd);
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -497,11 +486,11 @@ public class RFAPT extends LinearOpMode {
         }   // end for() loop
         if (currentRecognitions.size()!=0){
             for (Recognition recognition : currentRecognitions) {
-                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.9)){
-                    if (((recognition.getLeft()+ recognition.getRight())/2)<300){
-                        auto=2;
+                if((recognition.getImageHeight()<=1.5* recognition.getImageWidth())&&(recognition.getImageWidth()<=1.5* recognition.getImageHeight())&&(recognition.getConfidence()>0.87)){
+                    if (((recognition.getLeft()+ recognition.getRight())/2)<200){
+                        auto=1;
                     } else {
-                        auto = 3;
+                        auto = 2;
                     }
 
                 } else {
@@ -513,7 +502,7 @@ public class RFAPT extends LinearOpMode {
             }   // end for() loop
             telemetry.addData("auto",auto);
         }else {
-            auto =1;
+            auto =3;
         }
 
         telemetry.addData("auto",auto);
@@ -551,9 +540,9 @@ public class RFAPT extends LinearOpMode {
                     .build();
         } else {
             myVisionPortal = new VisionPortal.Builder()
-                    .setCamera(BuiltinCameraDirection.BACK)
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 2"))
                     .addProcessors(tfod, aprilTag)
                     .build();
         }
-    } // end initDoubleVision()
+    }   // end initDoubleVision()
 }   // end class

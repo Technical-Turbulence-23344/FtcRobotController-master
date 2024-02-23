@@ -38,7 +38,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -57,9 +56,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RFAPT")
+@Autonomous(name = "FellowshipRFAPT")
 
-public class RFAPT extends LinearOpMode {
+public class FellowshipRFAPT extends LinearOpMode {
 
 
     int auto =1;
@@ -123,7 +122,7 @@ public class RFAPT extends LinearOpMode {
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
-                .lineToSplineHeading(new Pose2d(-25,20, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-24,20, Math.toRadians(-90)))
                 .build();
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,-10, Math.toRadians(90)))
@@ -138,15 +137,6 @@ public class RFAPT extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
                 .lineToSplineHeading(new Pose2d(-16,20, Math.toRadians(-90)))
-                .build();
-        TrajectorySequence trajSeq2back =drive.trajectorySequenceBuilder(startPose)
-                .forward(12)
-                .lineToConstantHeading(new Vector2d(6,26))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(1.3, () -> intakeMove.setPower(0))
-                .forward(92)
                 .build();
 
 
@@ -204,12 +194,17 @@ public class RFAPT extends LinearOpMode {
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,19))
+                .lineToConstantHeading (new Vector2d(0,-30))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(-10,0))
+
+                .build();
+        Trajectory trajgg = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-15,0))
 
                 .build();
         Trajectory traj3g = drive.trajectoryBuilder(new Pose2d())
@@ -407,7 +402,6 @@ public class RFAPT extends LinearOpMode {
 
 
 
-
         } if (auto ==3){
             drive.followTrajectorySequence(trajSeq3);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
@@ -449,20 +443,21 @@ public class RFAPT extends LinearOpMode {
             intakeRotate.setPower(1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1e);
+            drive.followTrajectory(traj3e);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(300);
-            resetRuntime();
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj3f);
+            sleep(200);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(trajgg);
             intakeMove.setPower(1);
             sleep(1300);
             intakeMove.setPower(0);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj3g);
+            sleep(100);
+
 
         }
 
@@ -551,9 +546,9 @@ public class RFAPT extends LinearOpMode {
                     .build();
         } else {
             myVisionPortal = new VisionPortal.Builder()
-                    .setCamera(BuiltinCameraDirection.BACK)
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 2"))
                     .addProcessors(tfod, aprilTag)
                     .build();
         }
-    } // end initDoubleVision()
+    }   // end initDoubleVision()
 }   // end class

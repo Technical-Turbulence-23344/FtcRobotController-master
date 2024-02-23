@@ -2,16 +2,21 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.opmode.LinearSlidePosition;
 
 @TeleOp
 public class Drivetrain4 extends LinearOpMode {
@@ -21,6 +26,7 @@ public class Drivetrain4 extends LinearOpMode {
         // Make sure your ID's match your configuration
         boolean use =false;
         CRServo linActServo = hardwareMap.crservo.get("linActServo");
+        CRServo mosaicMover = hardwareMap.crservo.get("mosaicMover");
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
@@ -31,6 +37,8 @@ public class Drivetrain4 extends LinearOpMode {
         CRServo pixelIn = hardwareMap.crservo.get("pixelIn");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
         Servo droneLauncher = hardwareMap.servo.get("droneLauncher");
+        NormalizedColorSensor color1 = hardwareMap.get(NormalizedColorSensor.class, "color");
+        NormalizedColorSensor color2 = hardwareMap.get(NormalizedColorSensor.class, "color2");
         CRServo intakeMove = hardwareMap.crservo.get("intakeMove");
         CRServo intakeRotate = hardwareMap.crservo.get("intakeRotate");
         DcMotor linearActuator = hardwareMap.dcMotor.get("linearActuator");
@@ -53,8 +61,13 @@ public class Drivetrain4 extends LinearOpMode {
         boolean servoTighten = false;
         boolean servoLossen = false;;
         boolean toes = false;
+        boolean fingers = false;
         double y = 0;
+        int numberInOne;
+        int numberInTwo;
         boolean closed = false;
+        double colorRuntime = 0.0;
+        double colorWaittime = 0.0;
         double aRunTime = 0.0;
         double bRunTime = 0.0;
         double mRunTime = 0.0;
@@ -75,9 +88,10 @@ public class Drivetrain4 extends LinearOpMode {
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        double currentPositionLin = linearSlideLeft.getCurrentPosition()+100;
+        double currentPositionLin = (-1)*LinearSlidePosition.pos +100;
         boolean linearSlideMode = false;
         boolean prevState = false;
+        String intendedColor = "red";
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
@@ -94,26 +108,102 @@ public class Drivetrain4 extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+            NormalizedRGBA colors = color1.getNormalizedColors();
+            NormalizedRGBA colors2 = color2.getNormalizedColors();
+            String colorIn1 = "Undefined";
+            String colorIn2 = "Undefined";
+            double colorSum = colors.red + colors.green + colors.blue;
+            double colorSum2 = colors2.red + colors2.green + colors2.blue;
+            boolean isPixelIn1 = false;
+            boolean isPixelIn2 = false;
+            double redPercentage =(100*colors.red)/colorSum;
+            double greenPercentage =(100*colors.green)/colorSum;
+            double bluePercentage =(100*colors.blue)/colorSum;
+            double redPercentage2 =(100*colors2.red)/colorSum2;
+            double greenPercentage2 =(100*colors2.green)/colorSum2;
+            double bluePercentage2 =(100*colors2.blue)/colorSum2;
+            if (((DistanceSensor) color1).getDistance(DistanceUnit.INCH)<0.7){
+                isPixelIn1 = true;
+            }
+            if ((isPixelIn1)&&(greenPercentage>39)&&(greenPercentage<43)&&(redPercentage>20)&&(redPercentage<24)&&(bluePercentage>34)&&(bluePercentage<38)){
+                colorIn1 = "white!";
+            }
+            if ((isPixelIn1)&&(greenPercentage>45)&&(greenPercentage<51)&&(redPercentage>28)&&(redPercentage<34)&&(bluePercentage>16)&&(bluePercentage<22)){
+                colorIn1 = "yellow!";
+            }
+            if ((isPixelIn1)&&(greenPercentage>31)&&(greenPercentage<37)&&(redPercentage>19)&&(redPercentage<25)&&(bluePercentage>41)&&(bluePercentage<47)){
+                colorIn1 = "purple!";
+            }
+            if ((isPixelIn1)&&(greenPercentage>49)&&(greenPercentage<55)&&(redPercentage>16)&&(redPercentage<22)&&(bluePercentage>25)&&(bluePercentage<31)){
+                colorIn1 = "green!";
+            }
+            //Color sensor 2
+            if (((DistanceSensor) color2).getDistance(DistanceUnit.INCH)<1.0){
+                isPixelIn2 = true;
+            }
+            if ((isPixelIn2)&&(greenPercentage2>39)&&(greenPercentage2<43)&&(redPercentage2>20)&&(redPercentage2<24)&&(bluePercentage2>34)&&(bluePercentage2<38)){
+                colorIn2 = "white!";
+            }
+            if ((isPixelIn2)&&(greenPercentage2>48)&&(greenPercentage2<54)&&(redPercentage2>32)&&(redPercentage2<37)&&(bluePercentage2>11)&&(bluePercentage2<16)){
+                colorIn2 = "yellow!";
+            }
+            if ((isPixelIn2)&&(greenPercentage2>29)&&(greenPercentage2<34)&&(redPercentage2>19)&&(redPercentage2<23)&&(bluePercentage2>44)&&(bluePercentage2<48)){
+                colorIn2 = "purple!";
+            }
+            if ((isPixelIn2)&&(greenPercentage2>56)&&(greenPercentage2<62)&&(redPercentage2>14)&&(redPercentage2<20)&&(bluePercentage2>21)&&(bluePercentage2<26)){
+                colorIn2 = "green!";
+            }
+            if (isPixelIn1==true){
+                numberInOne =1;
+            } else {
+                numberInOne = 0;
+            }
+
+            if (isPixelIn2==true){
+                numberInTwo =1;
+            } else {
+                numberInTwo = 0;
+            }
+            if (numberInTwo+numberInOne==0){
+                intendedColor = "red";
+            }
+            if (numberInTwo+numberInOne==1){
+                intendedColor = "yellow";
+            }
+            if (numberInTwo+numberInOne==2){
+                intendedColor = "green";
+            }
+
+
+
+            telemetry.addData("Pixel in Slot 1: ",isPixelIn1);
+            telemetry.addData("Pixel Color in Slot 1: ",colorIn1);
+            telemetry.addData("distance",((DistanceSensor) color1).getDistance(DistanceUnit.INCH));
+            telemetry.addLine()
+                    .addData("Red", "%.3f", redPercentage)
+                    .addData("Green", "%.3f", greenPercentage)
+                    .addData("Blue", "%.3f", bluePercentage);
+            //COlor senosr 2
+            telemetry.addData("Pixel in Slot 2: ",isPixelIn2);
+            telemetry.addData("Pixel Color in Slot 2: ",colorIn2);
+            telemetry.addData("distance",((DistanceSensor) color2).getDistance(DistanceUnit.INCH));
+            telemetry.addLine()
+                    .addData("Red", "%.3f", redPercentage2)
+                    .addData("Green", "%.3f", greenPercentage2)
+                    .addData("Blue", "%.3f", bluePercentage2);
+            telemetry.update();
             drive.update();
 
             // Retrieve your pose
             Pose2d myPose = drive.getPoseEstimate();
-            telemetry.addData("x", myPose.getX());
-            telemetry.addData("y", myPose.getY());
-            telemetry.addData("heading", Math.toDegrees(myPose.getHeading()));
 
 
 
-            telemetry.addData("leftLinearSlide",linearSlideLeft.getCurrentPosition());
-            telemetry.addData("rightLinearSlide",linearSlideRight.getCurrentPosition());
-            telemetry.update();
+
             double rightOdoPos = (backRightMotor.getCurrentPosition() * -1);
             double leftOdoPos = (frontLeftMotor.getCurrentPosition());
             double sideOdoPos = (backLeftMotor.getCurrentPosition());
-            telemetry.addData("FWDDistance", (rightOdoPos + leftOdoPos) / 2);
-            telemetry.addData("LeftOdoPos", (leftOdoPos));
-            telemetry.addData("RightOdoPos", (rightOdoPos));
-            telemetry.addData("SideOdoPos", (sideOdoPos));
+
 
 
             double turbo = 0.8 + 0.2 * gamepad1.right_trigger - 0.6 * gamepad1.left_trigger;
@@ -153,10 +243,7 @@ public class Drivetrain4 extends LinearOpMode {
                 linearSlideMode = false;
             }
 
-            telemetry.addData("right", rightLinearSlidePos);
-            telemetry.addData("left", rightLinearSlidePos);
-            telemetry.addData("rightPos", linearSlideRight.getCurrentPosition());
-            telemetry.addData("leftPos", linearSlideLeft.getCurrentPosition());
+
             //Linear Slide joystick controller 2
             if (gamepad2.right_stick_button) {
                 rightLinearSlidePos = linearSlideRight.getCurrentPosition();
@@ -180,16 +267,21 @@ public class Drivetrain4 extends LinearOpMode {
                 linearSlideLeft.setPower(0);
                 linearSlideRight.setPower(0);
             }
-            telemetry.update();
+
             if (gamepad2.a) {
-                intakeMotor.setPower(0.9);
+                colorRuntime = getRuntime();
+                if(isPixelIn1&&isPixelIn2){
+                    intakeMotor.setPower(-0.42);
+                } else {
+                    intakeMotor.setPower(0.9);
+                }
                 pixelIn.setPower(1);
                 pixelOut.setPosition(.8);
                 intakeRotate.setPower(-0.5);
                 intakeMove.setPower(0);
             } else if (gamepad2.b) {
                 intakeMotor.setPower(-0.8);
-                pixelIn.setPower(-1);
+                pixelIn.setPower(1);
                 intakeRotate.setPower(-.5);
                 intakeMove.setPower(-.4);
             } else {
@@ -210,17 +302,23 @@ public class Drivetrain4 extends LinearOpMode {
                     pixelIn.setPower(0);
                     toes = false;
                 }
+                if(gamepad2.x){
+                    toes =false;
+                }
             }
             if (closed && !gamepad2.x) {
                 bRunTime = getRuntime() - aRunTime;
-                if (bRunTime < 0.5) {
+                if (bRunTime < 0.2) {
                     pixelOut.setPosition(0);
-                } else if (bRunTime < 1) {
+                } else if (bRunTime < 0.4) {
                     pixelOut.setPosition(0.8);
-                } else if (bRunTime < 1.5) {
+                } else if (bRunTime < 0.7) {
                     pixelIn.setPower(0.77);
                 } else {
                     pixelIn.setPower(0);
+                    if (gamepad2.y){
+                        pixelOut.setPosition(0);
+                    }
                     closed = false;
                 }
             }
@@ -230,6 +328,13 @@ public class Drivetrain4 extends LinearOpMode {
             }
             if (gamepad1.start) {
                 droneLauncher.setPosition(0.8);
+            }
+            if (gamepad2.start){
+                mosaicMover.setPower(1);
+            } else if (gamepad2.back){
+                mosaicMover.setPower(-1);
+            } else{
+                mosaicMover.setPower(0);
             }
 
             if (gamepad2.left_stick_y>0) {
@@ -255,6 +360,11 @@ public class Drivetrain4 extends LinearOpMode {
             } else {
                 stackKnocker.setPower(0);
             }
+            if (getRuntime()-colorRuntime<=1.5){
+                fingers = true;
+            } else {
+                fingers = false;
+            }
 
 
 
@@ -270,9 +380,27 @@ public class Drivetrain4 extends LinearOpMode {
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
             } else if (gamepad2.right_stick_y <= -0.5) {
                 lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
-            } else {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
+            } else if (fingers) {
+
+                if (intendedColor == "red"){
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
+                } else if (intendedColor == "yellow"){
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
+                } else if (intendedColor == "green"){
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SKY_BLUE);
                 }
+            } else if (colorIn1 == "white!") {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
+            }else if (colorIn1 == "yellow!") {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);
+            } else if (colorIn1 == "purple!") {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
+            } else if (colorIn1 == "green!") {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+            }
+            else {
+                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
+            }
 
            
 
@@ -325,6 +453,7 @@ public class Drivetrain4 extends LinearOpMode {
                     }
 
                 }
+
 
 
 

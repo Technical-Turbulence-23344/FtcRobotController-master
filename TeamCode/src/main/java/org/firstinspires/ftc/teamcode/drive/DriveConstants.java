@@ -88,8 +88,11 @@ public class DriveConstants {
 
      */
     public static double MAX_VEL = 50;
+    //68
+    //50
     public static double MAX_ACCEL = 50;
-    //the above is meant to be retuned
+    //50
+    //68
     public static double MAX_ANG_VEL = Math.toRadians(180);
     //meant to be retuned
     public static double MAX_ANG_ACCEL = Math.toRadians(180);
