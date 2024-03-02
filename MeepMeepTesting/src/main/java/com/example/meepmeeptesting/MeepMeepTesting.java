@@ -14,16 +14,12 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .build()
-                );
+
+                                .lineToSplineHeading(new Pose2d(-37.5+13,0-60, Math.toRadians(0)))
+                                .forward(6)
+                                .lineToSplineHeading(new Pose2d(-36+13,-40-60, Math.toRadians(90)))
+                                .build());
+
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)

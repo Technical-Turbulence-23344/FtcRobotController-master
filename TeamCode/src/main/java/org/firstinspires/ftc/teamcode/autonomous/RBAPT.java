@@ -367,6 +367,7 @@ public class RBAPT extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            sleep(2500);
             if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();

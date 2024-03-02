@@ -236,28 +236,31 @@ public class DriveToAprilTag extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            while (1==1) {
-                if (aprilTag.getDetections().size() > 0) {
-                    for (int i = 0; i < aprilTag.getDetections().size(); i++) {
-                        AprilTagDetection tag = aprilTag.getDetections().get(i);
-                        idforapril = tag.id;
-                        xforlast = -1 * tag.ftcPose.y;
-                        yforlast = tag.ftcPose.x;
+            resetRuntime();
+            while (getRuntime()<10) {
+                if(gamepad2.a) {
+                    if (aprilTag.getDetections().size() > 0) {
+                        for (int i = 0; i < aprilTag.getDetections().size(); i++) {
+                            AprilTagDetection tag = aprilTag.getDetections().get(i);
+                            idforapril = tag.id;
+                            xforlast = -1 * tag.ftcPose.y;
+                            yforlast = tag.ftcPose.x;
 
-                        if (idforapril == 4) {
-                            trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast-0.5, yforlast-0.75))
+                            if (idforapril == 4) {
+                                trajApril = drive.trajectoryBuilder(new Pose2d())
+                                        .lineToConstantHeading(new Vector2d(xforlast - 0.5, yforlast - 0.75))
 
-                                    .build();
-                            hello = true;
+                                        .build();
+                                hello = true;
+                            }
                         }
+
+
+                        if (hello) {
+                            drive.followTrajectory(trajApril);
+                        }
+
                     }
-
-
-                    if (hello) {
-                        drive.followTrajectory(trajApril);
-                    }
-
                 }
             }
 

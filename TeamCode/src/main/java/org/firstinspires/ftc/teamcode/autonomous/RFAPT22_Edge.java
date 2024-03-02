@@ -29,30 +29,21 @@
 
 package org.firstinspires.ftc.teamcode.autonomous;
 
-import static com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern.DARK_RED;
-import static com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern.GREEN;
-import static com.qualcomm.hardware.rev.RevBlinkinLedDriver.BlinkinPattern.YELLOW;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.opmode.LinearSlidePosition;
@@ -71,9 +62,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RFAPT22")
+@Autonomous(name = "RFAPT22_Edge")
 
-public class RFAPT22 extends LinearOpMode {
+public class RFAPT22_Edge extends LinearOpMode {
 
 
     int auto =1;
@@ -109,16 +100,6 @@ public class RFAPT22 extends LinearOpMode {
        "red",
     };
 
-    private static NormalizedColorSensor color1;
-    private static NormalizedColorSensor color2;
-
-    String intendedColor;
-
-    int numberInOne;
-    int numberInTwo;
-
-    RevBlinkinLedDriver.BlinkinPattern help;
-
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
      */
@@ -142,9 +123,8 @@ public class RFAPT22 extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        color1 = hardwareMap.get(NormalizedColorSensor.class, "color");
-        color2 = hardwareMap.get(NormalizedColorSensor.class, "color2");
-        RevBlinkinLedDriver lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
+        NormalizedColorSensor color1 = hardwareMap.get(NormalizedColorSensor.class, "color");
+        NormalizedColorSensor color2 = hardwareMap.get(NormalizedColorSensor.class, "color2");
         CRServo stackKnocker = hardwareMap.crservo.get("stackKnocker");
         DcMotor linearSlideLeft = hardwareMap.dcMotor.get("linearSlideLeft");
         DcMotor linearSlideRight = hardwareMap.dcMotor.get("linearSlideRight");
@@ -174,7 +154,6 @@ public class RFAPT22 extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Pose2d startPose =new Pose2d(0, 0, Math.toRadians(0));
-        Pose2d backPose =new Pose2d(96,-26, Math.toRadians(0));
 
         drive.setPoseEstimate(startPose);
 
@@ -224,8 +203,8 @@ public class RFAPT22 extends LinearOpMode {
                 .build();
 
         //Position 2 RFAPT 2+3 Back
-        TrajectorySequence trajSeq2back =drive.trajectorySequenceBuilder(startPose)
-                .lineToConstantHeading(new Vector2d(12,-26))
+        TrajectorySequence trajSeq2back =drive.trajectorySequenceBuilder(new Pose2d())
+                .lineToConstantHeading(new Vector2d(12,27))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeMove.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeRotate.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeMove.setPower(0))
@@ -235,9 +214,10 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(1))
+                .forward(83)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0.5))
-                .lineToConstantHeading(new Vector2d(110,-26))
+                .turn(Math.toRadians(135))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
@@ -249,10 +229,7 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> intakeMotor.setPower(0.9))
-                .lineToConstantHeading(new Vector2d(114.6,-26))
-                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
+                .forward(4.6)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.3))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
@@ -265,29 +242,15 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .lineToConstantHeading(new Vector2d(96,-26))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .build();
-        TrajectorySequence getPixel = drive.trajectorySequenceBuilder(backPose)
-                .splineToConstantHeading((new Vector2d(110,-18)), Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.3))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .strafeLeft(8)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .waitSeconds(0.5)
-                .splineToConstantHeading((new Vector2d(96,-26)), Math.toRadians(0))
-                .build();
-        TrajectorySequence trajSeq2Score =drive.trajectorySequenceBuilder(backPose)
-                .lineToConstantHeading(new Vector2d(7.6,-26))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .strafeRight(8)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
+                .back(92)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> intakeMotor.setPower(-1))
@@ -506,6 +469,7 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
+            sleep(30000);
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
                     for (int i = 0; i < aprilTag.getDetections().size(); i++) {
@@ -618,6 +582,7 @@ public class RFAPT22 extends LinearOpMode {
             tempTheta = drive.getPoseEstimate().getHeading();
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
+            sleep(30000);
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
                     for (int i = 0; i < aprilTag.getDetections().size(); i++) {
@@ -668,12 +633,40 @@ public class RFAPT22 extends LinearOpMode {
             hello = false;
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectorySequence(trajSeq2back);
-            checkForColor();
-            lights.setPattern(help);
-            if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
-                drive.followTrajectorySequence(getPixel);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            resetRuntime();
+            while (getRuntime()<1) {
+                if (aprilTag.getDetections().size() > 0) {
+                    for (int i = 0; i < aprilTag.getDetections().size(); i++) {
+                        AprilTagDetection tag = aprilTag.getDetections().get(i);
+                        idforapril = tag.id;
+                        xforlast = -1 * tag.ftcPose.y;
+                        yforlast = tag.ftcPose.x;
+
+                        if (idforapril == 4) {
+                            trajApril = drive.trajectoryBuilder(new Pose2d())
+                                    .lineToConstantHeading(new Vector2d(xforlast-0.5, yforlast))
+
+                                    .build();
+                            hello = true;
+                        }
+                    }
+
+
+                    if (hello) {
+                        drive.followTrajectory(trajApril);
+                    }
+
+                }
             }
-            drive.followTrajectorySequence(trajSeq2Score);
+            if(!hello){
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(t1);
+                drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+                sleep(200);
+                drive.followTrajectory(traj1d);
+            }
             frontLeftMotor.setPower(-0.2);
             frontRightMotor.setPower(-0.2);
             backLeftMotor.setPower(-0.2);
@@ -702,6 +695,7 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq3);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             resetRuntime();
+            sleep(30000);
             while (getRuntime()<1) {
                 if (aprilTag.getDetections().size() > 0) {
                     for (int i = 0; i < aprilTag.getDetections().size(); i++) {
@@ -899,75 +893,5 @@ public class RFAPT22 extends LinearOpMode {
         }
 
     }   // end initDoubleVision()
-
-    private void checkForColor(){
-        NormalizedRGBA colors = color1.getNormalizedColors();
-        NormalizedRGBA colors2 = color2.getNormalizedColors();
-        String colorIn1 = "Undefined";
-        String colorIn2 = "Undefined";
-        double colorSum = colors.red + colors.green + colors.blue;
-        double colorSum2 = colors2.red + colors2.green + colors2.blue;
-        boolean isPixelIn1 = false;
-        boolean isPixelIn2 = false;
-        double redPercentage =(100*colors.red)/colorSum;
-        double greenPercentage =(100*colors.green)/colorSum;
-        double bluePercentage =(100*colors.blue)/colorSum;
-        double redPercentage2 =(100*colors2.red)/colorSum2;
-        double greenPercentage2 =(100*colors2.green)/colorSum2;
-        double bluePercentage2 =(100*colors2.blue)/colorSum2;
-        if (((DistanceSensor) color1).getDistance(DistanceUnit.INCH)<0.7){
-            isPixelIn1 = true;
-        }
-        if ((isPixelIn1)&&(greenPercentage>39)&&(greenPercentage<43)&&(redPercentage>20)&&(redPercentage<24)&&(bluePercentage>34)&&(bluePercentage<38)){
-            colorIn1 = "white!";
-        }
-        if ((isPixelIn1)&&(greenPercentage>45)&&(greenPercentage<51)&&(redPercentage>28)&&(redPercentage<34)&&(bluePercentage>16)&&(bluePercentage<22)){
-            colorIn1 = "yellow!";
-        }
-        if ((isPixelIn1)&&(greenPercentage>31)&&(greenPercentage<37)&&(redPercentage>19)&&(redPercentage<25)&&(bluePercentage>41)&&(bluePercentage<47)){
-            colorIn1 = "purple!";
-        }
-        if ((isPixelIn1)&&(greenPercentage>49)&&(greenPercentage<55)&&(redPercentage>16)&&(redPercentage<22)&&(bluePercentage>25)&&(bluePercentage<31)){
-            colorIn1 = "green!";
-        }
-        //Color sensor 2
-        if (((DistanceSensor) color2).getDistance(DistanceUnit.INCH)<1.0){
-            isPixelIn2 = true;
-        }
-        if ((isPixelIn2)&&(greenPercentage2>39)&&(greenPercentage2<43)&&(redPercentage2>20)&&(redPercentage2<24)&&(bluePercentage2>34)&&(bluePercentage2<38)){
-            colorIn2 = "white!";
-        }
-        if ((isPixelIn2)&&(greenPercentage2>48)&&(greenPercentage2<54)&&(redPercentage2>32)&&(redPercentage2<37)&&(bluePercentage2>11)&&(bluePercentage2<16)){
-            colorIn2 = "yellow!";
-        }
-        if ((isPixelIn2)&&(greenPercentage2>29)&&(greenPercentage2<34)&&(redPercentage2>19)&&(redPercentage2<23)&&(bluePercentage2>44)&&(bluePercentage2<48)){
-            colorIn2 = "purple!";
-        }
-        if ((isPixelIn2)&&(greenPercentage2>56)&&(greenPercentage2<62)&&(redPercentage2>14)&&(redPercentage2<20)&&(bluePercentage2>21)&&(bluePercentage2<26)){
-            colorIn2 = "green!";
-        }
-        if (isPixelIn1==true){
-            numberInOne =1;
-        } else {
-            numberInOne = 0;
-        }
-
-        if (isPixelIn2==true){
-            numberInTwo =1;
-        } else {
-            numberInTwo = 0;
-        }
-        if (numberInTwo+numberInOne==0){
-            help =  RevBlinkinLedDriver.BlinkinPattern.DARK_RED;
-        }
-        if (numberInTwo+numberInOne==1){
-            help =  RevBlinkinLedDriver.BlinkinPattern.YELLOW;
-
-        }
-        if (numberInTwo+numberInOne==2){
-            help =  RevBlinkinLedDriver.BlinkinPattern.GREEN;
-
-        }
-    }
 
 }   // end class

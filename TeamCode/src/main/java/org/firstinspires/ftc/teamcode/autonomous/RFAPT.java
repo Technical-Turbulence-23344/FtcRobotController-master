@@ -120,6 +120,7 @@ public class RFAPT extends LinearOpMode {
 
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(90)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
@@ -127,6 +128,7 @@ public class RFAPT extends LinearOpMode {
                 .build();
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,-10, Math.toRadians(90)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
@@ -134,10 +136,11 @@ public class RFAPT extends LinearOpMode {
                 .build();
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,11, Math.toRadians(90)))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(8)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
-                .lineToSplineHeading(new Pose2d(-16,20, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-19,20, Math.toRadians(-90)))
                 .build();
         TrajectorySequence trajSeq2back =drive.trajectorySequenceBuilder(startPose)
                 .forward(12)
@@ -155,15 +158,16 @@ public class RFAPT extends LinearOpMode {
 
                 .build();
         Trajectory t3 = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-12,-3))
+                .lineToConstantHeading(new Vector2d(-19,0))
+
 
                 .build();
         Trajectory t2 = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-14,-0.5))
+                .lineToConstantHeading(new Vector2d(-19,0))
 
                 .build();
         Trajectory t1 = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-14,0))
+                .lineToConstantHeading(new Vector2d(-19,0))
 
                 .build();
         Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
@@ -324,8 +328,6 @@ public class RFAPT extends LinearOpMode {
                 sleep(200);
                 drive.followTrajectory(t1);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-                sleep(200);
-                drive.followTrajectory(traj1d);
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -382,8 +384,6 @@ public class RFAPT extends LinearOpMode {
                 sleep(200);
                 drive.followTrajectory(t2);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-                sleep(200);
-                drive.followTrajectory(traj1d);
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -441,8 +441,6 @@ public class RFAPT extends LinearOpMode {
                 sleep(200);
                 drive.followTrajectory(t3);
                 drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-                sleep(200);
-                drive.followTrajectory(traj1d);
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
