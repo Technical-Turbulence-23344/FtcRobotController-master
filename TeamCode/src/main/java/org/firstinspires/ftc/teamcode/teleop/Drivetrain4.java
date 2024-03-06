@@ -141,7 +141,7 @@ public class Drivetrain4 extends LinearOpMode {
             if (((DistanceSensor) color2).getDistance(DistanceUnit.INCH)<1.0){
                 isPixelIn2 = true;
             }
-            if ((isPixelIn2)&&(greenPercentage2>39)&&(greenPercentage2<43)&&(redPercentage2>20)&&(redPercentage2<24)&&(bluePercentage2>34)&&(bluePercentage2<38)){
+            if ((isPixelIn2)&&(greenPercentage2>40)&&(greenPercentage2<45)&&(redPercentage2>22)&&(redPercentage2<26)&&(bluePercentage2>31)&&(bluePercentage2<36)){
                 colorIn2 = "white!";
             }
             if ((isPixelIn2)&&(greenPercentage2>48)&&(greenPercentage2<54)&&(redPercentage2>32)&&(redPercentage2<37)&&(bluePercentage2>11)&&(bluePercentage2<16)){
