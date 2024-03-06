@@ -57,7 +57,6 @@ import java.util.List;
  */
 @Autonomous(name = "BlueBack")
 @Disabled
-
 public class BlueBack extends LinearOpMode {
 
 
@@ -253,8 +252,7 @@ public class BlueBack extends LinearOpMode {
                 // choose one of the following:
                 //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
                 //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-                .setModelAssetName(TFOD_MODEL_ASSET)
-                //.setModelFileName(TFOD_MODEL_FILE)
+                .setModelFileName(TFOD_MODEL_FILE)
 
                 // The following default settings are available to un-comment and edit as needed to
                 // set parameters for custom models.

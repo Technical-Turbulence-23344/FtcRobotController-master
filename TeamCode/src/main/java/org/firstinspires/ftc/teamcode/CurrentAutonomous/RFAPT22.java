@@ -500,6 +500,42 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
                 .lineToConstantHeading(new Vector2d(0,6))
                 .build();
+        TrajectorySequence getStack1 = drive.trajectorySequenceBuilder(backPose1)
+                .lineToConstantHeading(new Vector2d(110,-16))
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> intakeMotor.setPower(0.9))
+                .UNSTABLE_addTemporalMarkerOffset(0.4, () -> intakeMotor.setPower(0.9))
+                .lineToConstantHeading(new Vector2d(114.6,-16))
+                .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
+                .lineToConstantHeading(new Vector2d(96,-20))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
+                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
+                .build();
 
 
         //Position 2 RFAPT 2+2 April Tag backup
@@ -634,6 +670,7 @@ public class RFAPT22 extends LinearOpMode {
             if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
                 drive.followTrajectorySequence(getPixel1);
             }
+
             checkForColor();
             lights.setPattern(help);
             resetRuntime();
@@ -732,7 +769,7 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq2back);
             checkForColor();
             lights.setPattern(help);
-            if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
+            if(help == RevBlinkinLedDriver.BlinkinPattern.YELLOW){
                 drive.followTrajectorySequence(getPixel);
             }
             checkForColor();
@@ -833,7 +870,7 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq3back);
             checkForColor();
             lights.setPattern(help);
-            if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
+            if(help == RevBlinkinLedDriver.BlinkinPattern.YELLOW){
                 drive.followTrajectorySequence(getPixel3);
             }
             checkForColor();
