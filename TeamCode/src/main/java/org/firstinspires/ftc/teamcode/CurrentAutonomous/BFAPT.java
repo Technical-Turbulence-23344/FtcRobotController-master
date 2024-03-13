@@ -133,21 +133,21 @@ public class BFAPT extends LinearOpMode {
                 .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(-90)))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-24,-24, Math.toRadians(90)))
                 .build();
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,-12, Math.toRadians(-90)))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-16,-24, Math.toRadians(90)))
                 .build();
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-30,-24, Math.toRadians(90)))
                 .build();
 
@@ -319,7 +319,7 @@ public class BFAPT extends LinearOpMode {
 
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
@@ -377,7 +377,7 @@ public class BFAPT extends LinearOpMode {
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);
@@ -434,7 +434,7 @@ public class BFAPT extends LinearOpMode {
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1e);

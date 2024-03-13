@@ -195,24 +195,24 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeRotate.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-25, 24, Math.toRadians(-90)))
                 .build();
 
         //Position 1 RFAPT 2+2
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-28.5,-10, Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-29.5,-10, Math.toRadians(90)))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeMove.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeRotate.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeMove.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeRotate.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-31,24, Math.toRadians(-90)))
                 .build();
 
@@ -225,9 +225,9 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.0, () -> intakeRotate.setPower(0))
                 .forward(8)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-19,24, Math.toRadians(-90)))
                 .build();
 
@@ -253,8 +253,8 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
@@ -264,8 +264,8 @@ public class RFAPT22 extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(114.6,-26))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -283,7 +283,7 @@ public class RFAPT22 extends LinearOpMode {
         TrajectorySequence getPixel = drive.trajectorySequenceBuilder(backPose)
                 .splineToConstantHeading((new Vector2d(112,-16)), Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.3))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -306,14 +306,14 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1)).UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -343,8 +343,8 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
@@ -354,8 +354,8 @@ public class RFAPT22 extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(114.6,-32))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -373,7 +373,7 @@ public class RFAPT22 extends LinearOpMode {
         TrajectorySequence getPixel3 = drive.trajectorySequenceBuilder(backPose3)
                 .splineToConstantHeading((new Vector2d(112,-22)), Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.3))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -396,14 +396,14 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1)).UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -433,8 +433,8 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
@@ -444,8 +444,8 @@ public class RFAPT22 extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(114.6,-20))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -463,7 +463,7 @@ public class RFAPT22 extends LinearOpMode {
         TrajectorySequence getPixel1 = drive.trajectorySequenceBuilder(backPose1)
                 .splineToConstantHeading((new Vector2d(112,-10)), Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.3))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -486,14 +486,14 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1)).UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.6))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -509,8 +509,8 @@ public class RFAPT22 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> stackKnocker.setPower(-0.5))
                 .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> stackKnocker.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
@@ -520,8 +520,8 @@ public class RFAPT22 extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(114.6,-16))
                 .UNSTABLE_addTemporalMarkerOffset(-0.1, () -> intakeMotor.setPower(0.9))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -650,7 +650,7 @@ public class RFAPT22 extends LinearOpMode {
 
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
@@ -674,7 +674,7 @@ public class RFAPT22 extends LinearOpMode {
             checkForColor();
             lights.setPattern(help);
             resetRuntime();
-            intakeMotor.setPower(-0.3-getRuntime()*0.7);
+            intakeMotor.setPower(-0.3);
             drive.followTrajectorySequence(trajSeq1Score);
             frontLeftMotor.setPower(-0.2);
             frontRightMotor.setPower(-0.2);
@@ -684,7 +684,7 @@ public class RFAPT22 extends LinearOpMode {
             sleep(500);
             pixelOut.setPosition(0);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(100);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
             sleep(200);
@@ -752,7 +752,7 @@ public class RFAPT22 extends LinearOpMode {
 
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
@@ -769,13 +769,15 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq2back);
             checkForColor();
             lights.setPattern(help);
-            if(help == RevBlinkinLedDriver.BlinkinPattern.YELLOW){
+            if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
                 drive.followTrajectorySequence(getPixel);
             }
             checkForColor();
             lights.setPattern(help);
             resetRuntime();
-            intakeMotor.setPower(-0.3-getRuntime()*0.7);
+            while(getRuntime()<0.5) {
+                intakeMotor.setPower(-0.3 - getRuntime()*1.4);
+            }
             drive.followTrajectorySequence(trajSeq2Score);
             frontLeftMotor.setPower(-0.2);
             frontRightMotor.setPower(-0.2);
@@ -785,7 +787,7 @@ public class RFAPT22 extends LinearOpMode {
             sleep(500);
             pixelOut.setPosition(0);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(100);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
             sleep(200);
@@ -853,7 +855,7 @@ public class RFAPT22 extends LinearOpMode {
 
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
@@ -870,7 +872,7 @@ public class RFAPT22 extends LinearOpMode {
             drive.followTrajectorySequence(trajSeq3back);
             checkForColor();
             lights.setPattern(help);
-            if(help == RevBlinkinLedDriver.BlinkinPattern.YELLOW){
+            if(help != RevBlinkinLedDriver.BlinkinPattern.GREEN){
                 drive.followTrajectorySequence(getPixel3);
             }
             checkForColor();
@@ -886,7 +888,7 @@ public class RFAPT22 extends LinearOpMode {
             sleep(500);
             pixelOut.setPosition(0);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(100);
             lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
             sleep(200);

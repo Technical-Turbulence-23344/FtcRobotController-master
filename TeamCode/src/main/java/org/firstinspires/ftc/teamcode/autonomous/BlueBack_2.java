@@ -206,7 +206,7 @@ public class BlueBack_2 extends LinearOpMode {
             drive.followTrajectory(traj1e);
             sleep(1000);
             intakeMove.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(4000);
 
             intakeMove.setPower(-1);
@@ -236,7 +236,7 @@ public class BlueBack_2 extends LinearOpMode {
             drive.followTrajectory(traj2e);
             sleep(1000);
             intakeMove.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(4000);
 
             intakeMove.setPower(-1);
@@ -266,7 +266,7 @@ public class BlueBack_2 extends LinearOpMode {
             drive.followTrajectory(traj2e);
             sleep(1000);
             intakeMove.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(4000);
 
             intakeMove.setPower(-1);

@@ -32,16 +32,20 @@ package org.firstinspires.ftc.teamcode.CurrentAutonomous;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -89,6 +93,12 @@ public class RBAPT extends LinearOpMode {
     private static  String[] LABELS = {
        "red",
     };
+    private static NormalizedColorSensor color1;
+    private static NormalizedColorSensor color2;
+    int numberInOne;
+    int numberInTwo;
+
+    RevBlinkinLedDriver.BlinkinPattern help;
 
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
@@ -103,6 +113,9 @@ public class RBAPT extends LinearOpMode {
     @Override
     public void runOpMode() {
         initDoubleVision();
+        color1 = hardwareMap.get(NormalizedColorSensor.class, "color");
+        color2 = hardwareMap.get(NormalizedColorSensor.class, "color2");
+        RevBlinkinLedDriver lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
         CRServo intakeMove = hardwareMap.crservo.get("intakeMove");
         CRServo intakeRotate = hardwareMap.crservo.get("intakeRotate");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
@@ -144,97 +157,101 @@ public class RBAPT extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
-                .back(6)
-                .lineToSplineHeading(new Pose2d(-26,-14, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-30,-12, Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .forward(2.5)
-                .lineToConstantHeading(new Vector2d(-49.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.6))
                 .waitSeconds(1)
-                .forward(3.5)
+                .lineToConstantHeading(new Vector2d(-25.5,-20))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .back(4)
+                .waitSeconds(1)
+                .lineToConstantHeading(new Vector2d(-25.5,-16))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .strafeRight(2)
+                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .back(95)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
+                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
+                .lineToConstantHeading(new Vector2d(-51.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .strafeLeft(17)
+                .lineToConstantHeading(new Vector2d(-30.5,78.5))
                 .build();
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-37.5,-5, Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .forward(6)
-                .lineToConstantHeading(new Vector2d(-49.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.6))
                 .waitSeconds(1)
-                .forward(3.5)
+                .lineToConstantHeading(new Vector2d(-25.5,-20))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .back(3.5)
+                .waitSeconds(1)
+                .lineToConstantHeading(new Vector2d(-25.5,-16))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .strafeRight(2)
+                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .back(95)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
+                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
+                .lineToConstantHeading(new Vector2d(-51.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .strafeLeft(23)
+                .lineToConstantHeading(new Vector2d(-24.5,78.5))
                 .build();
 
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .forward(7)
-                .lineToConstantHeading(new Vector2d(-49.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.6))
                 .waitSeconds(1)
-                .forward(3.5)
+                .lineToConstantHeading(new Vector2d(-25.5,-20))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(2)
+                .waitSeconds(1)
+                .lineToConstantHeading(new Vector2d(-25.5,-16))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
+                .waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
+                .waitSeconds(0.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0))
-                .back(3.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .strafeRight(2)
+                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .back(95)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
+                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
+                .lineToConstantHeading(new Vector2d(-51.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .strafeLeft(30)
+                .lineToConstantHeading(new Vector2d(-18.5,78.5))
                 .build();
         Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
                 .lineToConstantHeading(new Vector2d(-22,-6.6))
@@ -354,11 +371,7 @@ public class RBAPT extends LinearOpMode {
                 .build();
         boolean d= true;
         while (!opModeIsActive()) {
-            telemetry.addData("DS preview on/off","3 dots, Camera Stream");
-            telemetry.addLine();
-            telemetry.addLine("----------------------------------------");
-            telemetry.addData("auto",auto);
-            telemetry.update();
+            telemetryTfod();
         }
 
 
@@ -367,7 +380,7 @@ public class RBAPT extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(2500);
+            sleep(1500);
             if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();
@@ -457,7 +470,7 @@ public class RBAPT extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -544,7 +557,7 @@ public class RBAPT extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -629,7 +642,7 @@ public class RBAPT extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -644,6 +657,9 @@ public class RBAPT extends LinearOpMode {
         }
 
         // Save more CPU resources when camera is no longer needed.
+        stackKnocker.setPower(-1);
+        sleep(350);
+        stackKnocker.setPower(0);
 
 
 
@@ -658,7 +674,6 @@ public class RBAPT extends LinearOpMode {
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
     private void telemetryTfod() {
-
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
 
@@ -685,15 +700,16 @@ public class RBAPT extends LinearOpMode {
                     idle();
                 }
 
-            telemetry.addData("auto",auto);
+                telemetry.addData("auto",auto);
                 telemetry.addData("confonf",recognition.getConfidence());
+                telemetry.update();
             }   // end for() loop
-            telemetry.addData("auto",auto);
+
         }else {
             auto =3;
+            telemetry.addData("auto",auto);
+            telemetry.update();
         }
-
-        telemetry.addData("auto",auto);
 
     }   // end method telemetryTfod()
 
@@ -753,4 +769,73 @@ public class RBAPT extends LinearOpMode {
                     .build();
         }
     }   // end initDoubleVision()
+    private void checkForColor(){
+        NormalizedRGBA colors = color1.getNormalizedColors();
+        NormalizedRGBA colors2 = color2.getNormalizedColors();
+        String colorIn1 = "Undefined";
+        String colorIn2 = "Undefined";
+        double colorSum = colors.red + colors.green + colors.blue;
+        double colorSum2 = colors2.red + colors2.green + colors2.blue;
+        boolean isPixelIn1 = false;
+        boolean isPixelIn2 = false;
+        double redPercentage =(100*colors.red)/colorSum;
+        double greenPercentage =(100*colors.green)/colorSum;
+        double bluePercentage =(100*colors.blue)/colorSum;
+        double redPercentage2 =(100*colors2.red)/colorSum2;
+        double greenPercentage2 =(100*colors2.green)/colorSum2;
+        double bluePercentage2 =(100*colors2.blue)/colorSum2;
+        if (((DistanceSensor) color1).getDistance(DistanceUnit.INCH)<0.7){
+            isPixelIn1 = true;
+        }
+        if ((isPixelIn1)&&(greenPercentage>39)&&(greenPercentage<43)&&(redPercentage>20)&&(redPercentage<24)&&(bluePercentage>34)&&(bluePercentage<38)){
+            colorIn1 = "white!";
+        }
+        if ((isPixelIn1)&&(greenPercentage>45)&&(greenPercentage<51)&&(redPercentage>28)&&(redPercentage<34)&&(bluePercentage>16)&&(bluePercentage<22)){
+            colorIn1 = "yellow!";
+        }
+        if ((isPixelIn1)&&(greenPercentage>31)&&(greenPercentage<37)&&(redPercentage>19)&&(redPercentage<25)&&(bluePercentage>41)&&(bluePercentage<47)){
+            colorIn1 = "purple!";
+        }
+        if ((isPixelIn1)&&(greenPercentage>49)&&(greenPercentage<55)&&(redPercentage>16)&&(redPercentage<22)&&(bluePercentage>25)&&(bluePercentage<31)){
+            colorIn1 = "green!";
+        }
+        //Color sensor 2
+        if (((DistanceSensor) color2).getDistance(DistanceUnit.INCH)<1.0){
+            isPixelIn2 = true;
+        }
+        if ((isPixelIn2)&&(greenPercentage2>39)&&(greenPercentage2<43)&&(redPercentage2>20)&&(redPercentage2<24)&&(bluePercentage2>34)&&(bluePercentage2<38)){
+            colorIn2 = "white!";
+        }
+        if ((isPixelIn2)&&(greenPercentage2>48)&&(greenPercentage2<54)&&(redPercentage2>32)&&(redPercentage2<37)&&(bluePercentage2>11)&&(bluePercentage2<16)){
+            colorIn2 = "yellow!";
+        }
+        if ((isPixelIn2)&&(greenPercentage2>29)&&(greenPercentage2<34)&&(redPercentage2>19)&&(redPercentage2<23)&&(bluePercentage2>44)&&(bluePercentage2<48)){
+            colorIn2 = "purple!";
+        }
+        if ((isPixelIn2)&&(greenPercentage2>56)&&(greenPercentage2<62)&&(redPercentage2>14)&&(redPercentage2<20)&&(bluePercentage2>21)&&(bluePercentage2<26)){
+            colorIn2 = "green!";
+        }
+        if (isPixelIn1==true){
+            numberInOne =1;
+        } else {
+            numberInOne = 0;
+        }
+
+        if (isPixelIn2==true){
+            numberInTwo =1;
+        } else {
+            numberInTwo = 0;
+        }
+        if (numberInTwo+numberInOne==0){
+            help =  RevBlinkinLedDriver.BlinkinPattern.DARK_RED;
+        }
+        if (numberInTwo+numberInOne==1){
+            help =  RevBlinkinLedDriver.BlinkinPattern.DARK_RED;
+
+        }
+        if (numberInTwo+numberInOne==2){
+            help =  RevBlinkinLedDriver.BlinkinPattern.GREEN;
+
+        }
+    }
 }   // end class

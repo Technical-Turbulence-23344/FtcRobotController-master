@@ -153,7 +153,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .waitSeconds(1)
                 .forward(3.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -167,7 +167,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .back(95)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -183,7 +183,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .waitSeconds(1)
                 .forward(3.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -197,7 +197,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .back(95)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -214,7 +214,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .waitSeconds(1)
                 .forward(3.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
@@ -229,7 +229,7 @@ public class PIXELYELLOW extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .back(95)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
@@ -457,7 +457,7 @@ public class PIXELYELLOW extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -544,7 +544,7 @@ public class PIXELYELLOW extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -629,7 +629,7 @@ public class PIXELYELLOW extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(-1);
             sleep(1000);

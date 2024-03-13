@@ -149,7 +149,7 @@ public class eee extends LinearOpMode {
                 intakeMotor.setPower(0.8);
                 pixelIn.setPower(0.77);
                 pixelOut.setPosition(.8);
-                intakeRotate.setPower(-1);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(-1);
             } else if (gamepad2.b) {
                 intakeMotor.setPower(-0.8);
@@ -181,10 +181,10 @@ public class eee extends LinearOpMode {
                 droneLauncher.setPosition(0.8);
             }
             if (gamepad2.right_bumper) {
-                intakeRotate.setPower(1);
+                intakeRotate.setPower(-0.1);
                 intakeMove.setPower(1);
             } else if (gamepad2.left_bumper) {
-                intakeRotate.setPower(-1);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(-1);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);

@@ -182,7 +182,7 @@ public class Drivetrain extends LinearOpMode {
                 intakeMotor.setPower(0.5);
                 pixelIn.setPower(1);
                 pixelOut.setPosition(.8);
-                intakeRotate.setPower(-0.5);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(0);
             } else if (gamepad2.b) {
                 intakeMotor.setPower(-0.8);
@@ -215,10 +215,10 @@ public class Drivetrain extends LinearOpMode {
                 droneLauncher.setPosition(0.8);
             }
             if (gamepad2.right_bumper) {
-                intakeRotate.setPower(1);
+                intakeRotate.setPower(-0.1);
                 intakeMove.setPower(-1);
             } else if (gamepad2.left_bumper) {
-                intakeRotate.setPower(-1);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(1);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);

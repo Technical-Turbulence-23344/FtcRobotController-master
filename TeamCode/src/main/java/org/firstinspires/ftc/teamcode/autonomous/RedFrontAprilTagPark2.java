@@ -281,7 +281,7 @@ public class RedFrontAprilTagPark2 extends LinearOpMode {
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -346,7 +346,7 @@ public class RedFrontAprilTagPark2 extends LinearOpMode {
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
@@ -410,7 +410,7 @@ public class RedFrontAprilTagPark2 extends LinearOpMode {
             sleep(200);
             drive.followTrajectory(traj1d);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);

@@ -185,7 +185,7 @@ public class Drivetrain4_1 extends LinearOpMode {
                 intakeMotor.setPower(0.9);
                 pixelIn.setPower(1);
                 pixelOut.setPosition(.8);
-                intakeRotate.setPower(-0.5);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(0);
             } else if (gamepad2.b) {
                 intakeMotor.setPower(-0.8);
@@ -229,10 +229,10 @@ public class Drivetrain4_1 extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_y>0) {
-                intakeRotate.setPower(-1);
+                intakeRotate.setPower(0.1);
                 intakeMove.setPower(gamepad2.left_stick_y*0.3);
             } else if (gamepad2.left_stick_y<0) {
-                intakeRotate.setPower(1);
+                intakeRotate.setPower(-0.1);
                 intakeMove.setPower(gamepad2.left_stick_y*0.35);
             } else if (gamepad2.dpad_up) {
                 intakeRotate.setPower(0.6);

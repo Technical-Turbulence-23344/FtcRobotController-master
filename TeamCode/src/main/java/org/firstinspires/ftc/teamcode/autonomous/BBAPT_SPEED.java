@@ -154,7 +154,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .waitSeconds(0.7)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> stackKnocker.setPower(-0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .forward(3.5)
@@ -170,7 +170,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .back(86.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> linearSlideLeft.setPower(0.1))
@@ -186,7 +186,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .waitSeconds(0.7)
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> stackKnocker.setPower(-0.35))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .forward(3.5)
@@ -201,7 +201,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .back(84.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.7))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.7))
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> linearSlideLeft.setPower(0.1))
@@ -217,7 +217,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(-1))
                 .waitSeconds(0.7)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.5))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
                 .forward(3.5)
@@ -232,7 +232,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .back(91.5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0.2, () -> linearSlideLeft.setPower(0.1))
@@ -299,7 +299,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0.4, () -> linearSlideLeft.setPower(0.1))
@@ -366,7 +366,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> linearSlideLeft.setPower(0.1))
@@ -434,7 +434,7 @@ public class BBAPT_SPEED extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(1))
                 .UNSTABLE_addTemporalMarkerOffset(0.45, () -> linearSlideLeft.setPower(0.1))
@@ -660,7 +660,7 @@ public class BBAPT_SPEED extends LinearOpMode {
 
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -698,7 +698,7 @@ public class BBAPT_SPEED extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(500);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
@@ -750,7 +750,7 @@ public class BBAPT_SPEED extends LinearOpMode {
 
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -788,7 +788,7 @@ public class BBAPT_SPEED extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(500);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
@@ -843,7 +843,7 @@ public class BBAPT_SPEED extends LinearOpMode {
 
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             sleep(1000);
@@ -881,7 +881,7 @@ public class BBAPT_SPEED extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(500);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(300);
             pixelIn.setPower(-1);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));

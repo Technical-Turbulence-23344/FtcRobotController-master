@@ -182,10 +182,10 @@ public class d extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_y>0) {
-                intakeRotate.setPower(-1);
+                intakeRotate.setPower(0.1);
 
             } else if (gamepad2.left_stick_y<0) {
-                intakeRotate.setPower(1);
+                intakeRotate.setPower(-0.1);
 
 
 

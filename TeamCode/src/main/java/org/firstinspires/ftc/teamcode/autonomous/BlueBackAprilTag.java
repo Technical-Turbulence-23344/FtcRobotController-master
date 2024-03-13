@@ -352,7 +352,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(3000);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             intakeRotate.setPower(-0.7);
             intakeMove.setPower(-0.5);
@@ -362,7 +362,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             sleep(800);
             pixelIn.setPower(-1);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
@@ -428,7 +428,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(3000);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             intakeRotate.setPower(-0.7);
             intakeMove.setPower(-0.5);
@@ -438,7 +438,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             sleep(800);
             pixelIn.setPower(-1);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(0);
             intakeMove.setPower(0);
@@ -505,7 +505,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             backRightMotor.setPower(-0.2);
             sleep(3000);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(2300);
             intakeRotate.setPower(-0.7);
             intakeMove.setPower(-0.5);
@@ -515,7 +515,7 @@ public class BlueBackAprilTag extends LinearOpMode {
             sleep(800);
             pixelIn.setPower(-1);
             intakeMove.setPower(-0.5);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(1000);
             pixelIn.setPower(0);
             intakeMove.setPower(0);

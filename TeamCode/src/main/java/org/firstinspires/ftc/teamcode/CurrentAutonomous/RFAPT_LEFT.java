@@ -124,7 +124,7 @@ public class RFAPT_LEFT extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-25,20, Math.toRadians(-90)))
                 .build();
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
@@ -132,7 +132,7 @@ public class RFAPT_LEFT extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-31,20, Math.toRadians(-90)))
                 .build();
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
@@ -140,7 +140,7 @@ public class RFAPT_LEFT extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(8)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(1))
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
                 .lineToSplineHeading(new Pose2d(-19,20, Math.toRadians(-90)))
                 .build();
 
@@ -317,7 +317,7 @@ public class RFAPT_LEFT extends LinearOpMode {
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj3e);
@@ -330,7 +330,7 @@ public class RFAPT_LEFT extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1f);
             intakeMove.setPower(1);
-            intakeRotate.setPower(-1);
+            intakeRotate.setPower(0.1);
             sleep(1300);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
@@ -377,7 +377,7 @@ public class RFAPT_LEFT extends LinearOpMode {
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj3e);
@@ -434,7 +434,7 @@ public class RFAPT_LEFT extends LinearOpMode {
             }
             pixelOut.setPosition(0);
             pixelIn.setPower(-1);
-            intakeRotate.setPower(1);
+            intakeRotate.setPower(-0.1);
             sleep(200);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj3e);
