@@ -63,9 +63,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RBAPT")
+@Autonomous(name = "RBAPT_Edge_NoStack_Park")
 
-public class RBAPT extends LinearOpMode {
+public class RBAPT_Edge_NoStack_Park extends LinearOpMode {
 
 
     int auto =3;
@@ -157,132 +157,70 @@ public class RBAPT extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-30,-12, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToConstantHeading(new Vector2d(-27,-6.6))
+                .lineToConstantHeading(new Vector2d(-3.5,0))
+                .turn(Math.toRadians(-90))
+                .setTangent(0)
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
-                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .lineToConstantHeading(new Vector2d(-30.5,78.5))
+                .waitSeconds(0.1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.1))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.1))
+                .lineToConstantHeading(new Vector2d(-35,78.5))
                 .build();
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-37.5,-5, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToConstantHeading(new Vector2d(-33,0))
+                .lineToConstantHeading(new Vector2d(-3.5,0))
+                .turn( Math.toRadians(-90))
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .lineToConstantHeading(new Vector2d(-24.5,78.5))
+                .lineToConstantHeading(new Vector2d(-29,78.5))
                 .build();
 
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToSplineHeading(new Pose2d(-28.5,0, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-3.5,0, Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideRight.setPower(0.4))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideLeft.setPower(0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> linearSlideRight.setPower(0.1))
-                .lineToConstantHeading(new Vector2d(-18.5,78.5))
+                .lineToConstantHeading(new Vector2d(-23,78.5))
                 .build();
-        Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-22,-6.6))
+        Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .build();
-        Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading (new Pose2d(-1,0,Math.toRadians(-92)),
-                        SampleMecanumDrive.getVelocityConstraint(20,6.7464,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(50)
-
-                        )
-                .build();
-        Trajectory trajz = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading (new Vector2d(0,2.5),
-                        SampleMecanumDrive.getVelocityConstraint(13,2.5,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                )
-                .build();
-        Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading(new Vector2d(-75,0))
+                .lineToConstantHeading (new Vector2d(0,30))
 
                 .build();
-        Trajectory trajcc = drive.trajectoryBuilder(new Pose2d())
+        Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(-78.5,0))
+                .lineToConstantHeading (new Vector2d(0,23))
 
                 .build();
-        Trajectory traj3c = drive.trajectoryBuilder(new Pose2d())
+        Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading(new Vector2d(-82,0))
+                .lineToConstantHeading (new Vector2d(0,19))
+
+                .build();
+        Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-10,0))
+
+                .build();
+        Trajectory traj3g = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-15,0))
 
                 .build();
         Trajectory traj1d = drive.trajectoryBuilder(new Pose2d())
@@ -292,7 +230,12 @@ public class RBAPT extends LinearOpMode {
 
         Trajectory traj1e = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,6))
+                .lineToConstantHeading (new Vector2d(0,-6))
+
+                .build();
+        Trajectory traj1ee = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToSplineHeading (new Pose2d(16,0,Math.toRadians(1)))
 
                 .build();
         Trajectory traj1x = drive.trajectoryBuilder(new Pose2d())
@@ -318,52 +261,7 @@ public class RBAPT extends LinearOpMode {
                 .lineToConstantHeading (new Vector2d(-1,0))
 
                 .build();
-        Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,29.5))
-
-                .build();
-        Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(0,-23))
-
-                .build();
-        Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(0,-29))
-
-                .build();
-        Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(-10,0))
-
-                .build();
-        Trajectory traj3g = drive.trajectoryBuilder(new Pose2d())
-
-                .lineToConstantHeading (new Vector2d(-15,0))
-
-                .build();
-        Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(-31,0))
-                .build();
-        Trajectory traj2d = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(27,0))
-                .build();
-        Trajectory traj3a = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(-27,7.3,Math.toRadians(-90)))
-
-                .build();
-        Trajectory traj3b = drive.trajectoryBuilder(new Pose2d())
-                .lineToConstantHeading(new Vector2d(7.3,0),
-                        SampleMecanumDrive.getVelocityConstraint(13,2.5,10.69),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                )
-
-                .build();
-        Trajectory traj3r = drive.trajectoryBuilder(new Pose2d())
-                .lineToSplineHeading(new Pose2d(0,23.5,Math.toRadians(90)))
-
-                .build();
 
         Trajectory trajApril = drive.trajectoryBuilder(new Pose2d())
                 .lineToConstantHeading(new Vector2d(1,0))
@@ -380,7 +278,7 @@ public class RBAPT extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(1500);
+            intakeMove.setPower(0);
             if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();
@@ -414,7 +312,7 @@ public class RBAPT extends LinearOpMode {
 
                         if (idforapril == 4) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast+2, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
 
                                     .build();
                             hello = true;
@@ -445,7 +343,7 @@ public class RBAPT extends LinearOpMode {
 
                             if (idforapril == 4) {
                                 trajApril = drive.trajectoryBuilder(new Pose2d())
-                                        .lineToConstantHeading(new Vector2d(xforlast+2, yforlast))
+                                        .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
 
                                         .build();
                                 hello = true;
@@ -462,25 +360,31 @@ public class RBAPT extends LinearOpMode {
                 }
             }
 
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(1000);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(-0.1);
-            sleep(1000);
             pixelIn.setPower(-1);
-            sleep(1000);
-            drive.followTrajectory(traj1d);
-            sleep(200);
-            linearSlideLeft.setPower(-0.5);
-            linearSlideRight.setPower(-0.5);
-            sleep(600);
+            intakeRotate.setPower(-0.1);
+            sleep(400);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1ee);
+            linearSlideLeft.setPower(-1);
+            linearSlideRight.setPower(-1);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
             linearSlideLeft.setPower(0);
             linearSlideRight.setPower(0);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1f);
+            intakeMove.setPower(1);
+            intakeRotate.setPower(0.1);
+            sleep(800);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1g);
 
 
         }
@@ -500,7 +404,7 @@ public class RBAPT extends LinearOpMode {
 
                         if (idforapril == 5) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
                                     .build();
                             hello = true;
                         }
@@ -530,7 +434,7 @@ public class RBAPT extends LinearOpMode {
 
                             if (idforapril == 5) {
                                 trajApril = drive.trajectoryBuilder(new Pose2d())
-                                        .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                        .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
 
                                         .build();
                                 hello = true;
@@ -547,27 +451,33 @@ public class RBAPT extends LinearOpMode {
                 }
             }
 
-
-
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(1000);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(-0.1);
-            sleep(1000);
             pixelIn.setPower(-1);
-            sleep(1000);
-            drive.followTrajectory(traj1d);
-            sleep(200);
-            linearSlideLeft.setPower(-0.5);
-            linearSlideRight.setPower(-0.5);
-            sleep(600);
+            intakeRotate.setPower(-0.1);
+            sleep(400);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1ee);
+            linearSlideLeft.setPower(-1);
+            linearSlideRight.setPower(-1);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
             linearSlideLeft.setPower(0);
             linearSlideRight.setPower(0);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj2f);
+            intakeMove.setPower(1);
+            intakeRotate.setPower(0.1);
+            sleep(800);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1g);
+
+
 
 
 
@@ -586,7 +496,7 @@ public class RBAPT extends LinearOpMode {
 
                         if (idforapril == 6) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
 
                                     .build();
                             hello = true;
@@ -617,7 +527,7 @@ public class RBAPT extends LinearOpMode {
 
                             if (idforapril == 6) {
                                 trajApril = drive.trajectoryBuilder(new Pose2d())
-                                        .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                        .lineToConstantHeading(new Vector2d(xforlast-1, yforlast))
 
                                         .build();
                                 hello = true;
@@ -634,25 +544,32 @@ public class RBAPT extends LinearOpMode {
                 }
             }
 
-            frontLeftMotor.setPower(-0.2);
-            frontRightMotor.setPower(-0.2);
-            backLeftMotor.setPower(-0.2);
-            backRightMotor.setPower(-0.2);
-            sleep(1000);
-            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            sleep(200);
             pixelOut.setPosition(0);
-            intakeRotate.setPower(-0.1);
-            sleep(1000);
             pixelIn.setPower(-1);
-            sleep(1000);
-            drive.followTrajectory(traj1d);
-            sleep(200);
-            linearSlideLeft.setPower(-0.5);
-            linearSlideRight.setPower(-0.5);
-            sleep(600);
+            intakeRotate.setPower(-0.1);
+            sleep(400);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1ee);
+            linearSlideLeft.setPower(-1);
+            linearSlideRight.setPower(-1);
+            pixelIn.setPower(0);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            sleep(300);
             linearSlideLeft.setPower(0);
             linearSlideRight.setPower(0);
+            resetRuntime();
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj3f);
+            intakeMove.setPower(1);
+            intakeRotate.setPower(0.1);
+            sleep(800);
+            intakeMove.setPower(0);
+            intakeRotate.setPower(0);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj3g);
+
 
         }
 

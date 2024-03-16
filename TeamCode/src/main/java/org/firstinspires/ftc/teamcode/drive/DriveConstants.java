@@ -95,8 +95,10 @@ public class DriveConstants {
     //68
     public static double MAX_ANG_VEL = Math.toRadians(180);
     //meant to be retuned
+    //180, 1.6x180
     public static double MAX_ANG_ACCEL = Math.toRadians(180);
     //meant to be retuned
+    //180, 2x 180
 
 
     public static double encoderTicksToInches(double ticks) {

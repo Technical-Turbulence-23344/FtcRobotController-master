@@ -29,7 +29,6 @@ public class Drivetrain2 extends LinearOpMode {
         DcMotor intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
         CRServo pixelIn = hardwareMap.crservo.get("pixelIn");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
-        Servo droneLauncher = hardwareMap.servo.get("droneLauncher");
         CRServo intakeMove = hardwareMap.crservo.get("intakeMove");
         CRServo intakeRotate = hardwareMap.crservo.get("intakeRotate");
         DcMotor linearActuator = hardwareMap.dcMotor.get("linearActuator");
@@ -45,7 +44,7 @@ public class Drivetrain2 extends LinearOpMode {
         linearSlideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMove.setDirection(DcMotorSimple.Direction.REVERSE);
         pixelIn.setDirection(DcMotorSimple.Direction.REVERSE);
-        droneLauncher.setDirection(Servo.Direction.REVERSE);
+
         linearSlideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         linearSlideRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -198,9 +197,7 @@ public class Drivetrain2 extends LinearOpMode {
                 pixelIn.setPower(0.77);
             }
 
-            if (gamepad1.start) {
-                droneLauncher.setPosition(0.8);
-            }
+
             if (gamepad2.right_bumper) {
                 intakeRotate.setPower(-0.1);
                 intakeMove.setPower(1);
@@ -251,6 +248,8 @@ public class Drivetrain2 extends LinearOpMode {
                     linearActuator.setPower(1);
                 } else if (gamepad1.a) {
                     linearActuator.setPower(-1);
+                } else if (gamepad1.x) {
+                    linActServo.setPower(1);
                 } else {
                     linearActuator.setPower(0);
                     linActServo.setPower(0);

@@ -63,9 +63,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "RBAPT")
+@Autonomous(name = "RBAPT_Edge_NoStack")
 
-public class RBAPT extends LinearOpMode {
+public class RBAPT_Edge_NoStack extends LinearOpMode {
 
 
     int auto =3;
@@ -157,29 +157,10 @@ public class RBAPT extends LinearOpMode {
 
         drive.setPoseEstimate(startPose);
         TrajectorySequence trajSeq1 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-30,-12, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToConstantHeading(new Vector2d(-27,-6.6))
+                .lineToConstantHeading(new Vector2d(-3.5,-0))
+                .turn( Math.toRadians(-90))
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
@@ -189,29 +170,10 @@ public class RBAPT extends LinearOpMode {
                 .lineToConstantHeading(new Vector2d(-30.5,78.5))
                 .build();
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-37.5,-5, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToConstantHeading(new Vector2d(-33,0))
+                .lineToConstantHeading(new Vector2d(-3.5,-0))
+                .turn( Math.toRadians(-90))
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
@@ -223,28 +185,9 @@ public class RBAPT extends LinearOpMode {
 
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
                 .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
-                .lineToConstantHeading(new Vector2d(-25.5,-16.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(1))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-20))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0.9))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(0.1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(-1))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> stackKnocker.setPower(0))
-                .waitSeconds(1)
-                .lineToConstantHeading(new Vector2d(-25.5,-16))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.3))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-0.6))
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(-1))
-                .lineToConstantHeading(new Vector2d(-51.5,-14.5))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMotor.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> pixelIn.setPower(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> checkForColor())
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  lights.setPattern(help))
-                .lineToConstantHeading(new Vector2d(-51.5,78.5))
+                .lineToSplineHeading(new Pose2d(-28.5,0, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-3.5,0, Math.toRadians(-90)))
+                .lineToConstantHeading(new Vector2d(-3.5,78.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeRotate.setPower(-0.1))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> linearSlideLeft.setPower(0.4))
@@ -292,7 +235,7 @@ public class RBAPT extends LinearOpMode {
 
         Trajectory traj1e = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,6))
+                .lineToConstantHeading (new Vector2d(0,-6))
 
                 .build();
         Trajectory traj1x = drive.trajectoryBuilder(new Pose2d())
@@ -380,7 +323,7 @@ public class RBAPT extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(1500);
+            intakeMove.setPower(0);
             if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);
                 telemetry.update();

@@ -36,7 +36,7 @@ public class Drivetrain4 extends LinearOpMode {
         DcMotor intakeMotor = hardwareMap.dcMotor.get("intakeMotor");
         CRServo pixelIn = hardwareMap.crservo.get("pixelIn");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
-        Servo droneLauncher = hardwareMap.servo.get("droneLauncher");
+        CRServo droneLauncher = hardwareMap.crservo.get("dl");
         NormalizedColorSensor color1 = hardwareMap.get(NormalizedColorSensor.class, "color");
         NormalizedColorSensor color2 = hardwareMap.get(NormalizedColorSensor.class, "color2");
         CRServo intakeMove = hardwareMap.crservo.get("intakeMove");
@@ -68,6 +68,7 @@ public class Drivetrain4 extends LinearOpMode {
         boolean closed = false;
         double colorRuntime = 0.0;
         double colorWaittime = 0.0;
+        boolean waitOver = false;
         double aRunTime = 0.0;
         double bRunTime = 0.0;
         double mRunTime = 0.0;
@@ -76,7 +77,6 @@ public class Drivetrain4 extends LinearOpMode {
         linearSlideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMove.setDirection(DcMotorSimple.Direction.REVERSE);
         pixelIn.setDirection(DcMotorSimple.Direction.REVERSE);
-        droneLauncher.setDirection(Servo.Direction.REVERSE);
         linearSlideLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         linearSlideRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -327,7 +327,7 @@ public class Drivetrain4 extends LinearOpMode {
                 mRunTime = getRuntime();
             }
             if (gamepad1.start) {
-                droneLauncher.setPosition(0.8);
+                droneLauncher.setPower(1);
             }
             if (gamepad2.start){
                 mosaicMover.setPower(1);
@@ -365,42 +365,45 @@ public class Drivetrain4 extends LinearOpMode {
             } else {
                 fingers = false;
             }
+            if (getRuntime()>1.5){
+                waitOver = true;
+            }
 
 
 
 
 
-            if (gamepad1.right_bumper) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-            } else if (gamepad2.right_stick_x >= 0.5) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
-            } else if (gamepad2.right_stick_x <= -0.5) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
-            } else if (gamepad2.right_stick_y >= 0.5) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            } else if (gamepad2.right_stick_y <= -0.5) {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
-            } else if (fingers) {
-
-                if (intendedColor == "red"){
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
-                } else if (intendedColor == "yellow"){
+                if (gamepad1.right_bumper) {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
+                } else if (gamepad2.right_stick_x >= 0.5) {
                     lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
-                } else if (intendedColor == "green"){
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SKY_BLUE);
+                } else if (gamepad2.right_stick_x <= -0.5) {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
+                } else if (gamepad2.right_stick_y >= 0.5) {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+                } else if (gamepad2.right_stick_y <= -0.5) {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
+                } else if (fingers) {
+
+                    if (intendedColor == "red") {
+                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
+                    } else if (intendedColor == "yellow") {
+                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
+                    } else if (intendedColor == "green") {
+                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SKY_BLUE);
+                    }
+                } else if (colorIn1 == "white!") {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
+                } else if (colorIn1 == "yellow!") {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);
+                } else if (colorIn1 == "purple!") {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
+                } else if (colorIn1 == "green!") {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+                } else {
+                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
                 }
-            } else if (colorIn1 == "white!") {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
-            }else if (colorIn1 == "yellow!") {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);
-            } else if (colorIn1 == "purple!") {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
-            } else if (colorIn1 == "green!") {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-            }
-            else {
-                lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
-            }
+            
 
            
 
@@ -412,15 +415,15 @@ public class Drivetrain4 extends LinearOpMode {
             }
             if (isOn && !gamepad1.back) {
                 currentRuntime = getRuntime();
-                if (currentRuntime < 3) {
+                if (currentRuntime < 2) {
                     linActServo.setPower(1);
-                } else if (currentRuntime < 4) {
+                } else if (currentRuntime < 3) {
                     linActServo.setPower(0);
                     linearActuator.setPower(1);
-                } else if (currentRuntime < 9.5) {
+                } else if (currentRuntime < 7) {
                     linearActuator.setPower(0);
                     linActServo.setPower(-1);
-                } else if (currentRuntime < 10.5) {
+                } else if (currentRuntime < 8) {
                     linActServo.setPower(1);
                 } else {
                     linActServo.setPower(0);
