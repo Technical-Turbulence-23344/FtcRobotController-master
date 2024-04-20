@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -19,7 +17,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.opmode.LinearSlidePosition;
 
 @TeleOp
-public class Drivetrain4 extends LinearOpMode {
+public class Lights extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -73,7 +71,6 @@ public class Drivetrain4 extends LinearOpMode {
         double bRunTime = 0.0;
         double mRunTime = 0.0;
         double nRunTime = 0.0;
-        boolean mmyes = false;
         linearSlideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMove.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -92,8 +89,6 @@ public class Drivetrain4 extends LinearOpMode {
         double currentPositionLin = (-1)*LinearSlidePosition.pos +100;
         boolean linearSlideMode = false;
         boolean prevState = false;
-        double mmRuntime  = 0.0;
-        double mmbRuntime = 0.0;
         String intendedColor = "red";
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -334,19 +329,10 @@ public class Drivetrain4 extends LinearOpMode {
             }
             if (gamepad2.start){
                 mosaicMover.setPower(1);
-            }
-            if (gamepad2.back){
-                mmRuntime = getRuntime();
-                mmyes = true;
-            }
-            if(mmyes && !gamepad2.back){
-                mmbRuntime = getRuntime()-mmRuntime;
-                if (mmbRuntime<1.0){
-                    mosaicMover.setPower(-1);
-                } else {
-                    mosaicMover.setPower(0);
-                    mmyes = false;
-                }
+            } else if (gamepad2.back){
+                mosaicMover.setPower(-1);
+            } else{
+                mosaicMover.setPower(0);
             }
 
             if (gamepad2.left_stick_y>0) {
@@ -385,39 +371,9 @@ public class Drivetrain4 extends LinearOpMode {
 
 
 
-                if (gamepad1.right_bumper) {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
-                } else if (gamepad2.right_stick_x >= 0.5) {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
-                } else if (gamepad2.right_stick_x <= -0.5) {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
-                } else if (gamepad2.right_stick_y >= 0.5) {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-                } else if (gamepad2.right_stick_y <= -0.5) {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
-                } else if (fingers) {
-
-                    if (intendedColor == "red") {
-                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_RED);
-                    } else if (intendedColor == "yellow") {
-                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
-                    } else if (intendedColor == "green") {
-                        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SKY_BLUE);
-                    }
-                } else if (colorIn1 == "white!") {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
-                } else if (colorIn1 == "yellow!") {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);
-                } else if (colorIn1 == "purple!") {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
-                } else if (colorIn1 == "green!") {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-                } else {
-                    lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_PARTY_PALETTE);
-                }
-            
-
-           
+               if (gamepad1.right_bumper){
+                   lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.LARSON_SCANNER_RED);
+               }
 
 
             if (gamepad1.back) {
@@ -427,21 +383,20 @@ public class Drivetrain4 extends LinearOpMode {
             }
             if (isOn && !gamepad1.back) {
                 currentRuntime = getRuntime();
-                if (currentRuntime < 1.5) {
+                if (currentRuntime < 2) {
                     linActServo.setPower(1);
-                } else if (currentRuntime < 2.5) {
+                } else if (currentRuntime < 3) {
                     linActServo.setPower(0);
                     linearActuator.setPower(1);
-                } else if (currentRuntime < 6.5) {
+                } else if (currentRuntime < 5.5) {
                     linearActuator.setPower(0);
-                    linActServo.setPower(-0.3);
-                } else if (currentRuntime < 7.5) {
+                    linActServo.setPower(-1);
+                } else if (currentRuntime < 6.5) {
                     linActServo.setPower(1);
                 } else {
                     linActServo.setPower(0);
                     linearActuator.setPower(0);
                 }
-                //+0.5
 
 
                 if (gamepad1.x) {

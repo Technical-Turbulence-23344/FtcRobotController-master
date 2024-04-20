@@ -30,7 +30,6 @@ public class d extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         CRServo pixelIn = hardwareMap.crservo.get("pixelIn");
         Servo pixelOut = hardwareMap.servo.get("pixelOut");
-        Servo droneLauncher = hardwareMap.servo.get("droneLauncher");
         CRServo intakeRotate = hardwareMap.crservo.get("intakeRotate");
         int ticker = 0;
         int ticker2 = 0;
@@ -60,7 +59,6 @@ public class d extends LinearOpMode {
         double nRunTime = 0.0;
 
         pixelIn.setDirection(DcMotorSimple.Direction.REVERSE);
-        droneLauncher.setDirection(Servo.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -140,8 +138,7 @@ public class d extends LinearOpMode {
 
 
             if (gamepad2.x) {
-                closed = true;
-                aRunTime = getRuntime();
+                pixelOut.setPosition(0);
             }
             if (toes && !gamepad2.y) {
                 nRunTime = getRuntime() - mRunTime;
@@ -157,29 +154,12 @@ public class d extends LinearOpMode {
                     toes =false;
                 }
             }
-            if (closed && !gamepad2.x) {
-                bRunTime = getRuntime() - aRunTime;
-                if (bRunTime < 0.2) {
-                    pixelOut.setPosition(0);
-                } else if (bRunTime < 0.4) {
-                    pixelOut.setPosition(0.8);
-                } else if (bRunTime < 0.7) {
-                    pixelIn.setPower(0.77);
-                } else {
-                    pixelIn.setPower(0);
-                    if (gamepad2.y){
-                        pixelOut.setPosition(0);
-                    }
-                    closed = false;
-                }
-            }
+
             if (gamepad2.y) {
                 toes = true;
                 mRunTime = getRuntime();
             }
-            if (gamepad1.start) {
-                droneLauncher.setPosition(0.8);
-            }
+
 
             if (gamepad2.left_stick_y>0) {
                 intakeRotate.setPower(0.1);

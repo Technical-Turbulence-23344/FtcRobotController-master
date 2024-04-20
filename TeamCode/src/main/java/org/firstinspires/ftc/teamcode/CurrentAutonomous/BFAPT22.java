@@ -634,7 +634,7 @@ public class BFAPT22 extends LinearOpMode {
                 .lineToSplineHeading(new Pose2d(-18,-24, Math.toRadians(90)))
                 .build();
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-29.5,10, Math.toRadians(-90)))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.9))

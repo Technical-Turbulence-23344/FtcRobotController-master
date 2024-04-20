@@ -132,7 +132,7 @@ public class BFAPT_RIght extends LinearOpMode {
                 .build();
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
-                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-37.5,-3, Math.toRadians(-90)))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeRotate.setPower(-0.1))
@@ -147,7 +147,7 @@ public class BFAPT_RIght extends LinearOpMode {
                 .lineToSplineHeading(new Pose2d(-16,-24, Math.toRadians(90)))
                 .build();
         TrajectorySequence trajSeq3 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-28.5,10, Math.toRadians(-90)))
+                .lineToSplineHeading(new Pose2d(-29.5,10, Math.toRadians(-90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
@@ -190,22 +190,32 @@ public class BFAPT_RIght extends LinearOpMode {
                 .build();
         Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,30))
+                .lineToConstantHeading (new Vector2d(0,28))
 
                 .build();
         Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,24))
+                .lineToConstantHeading (new Vector2d(0,22))
 
                 .build();
         Trajectory traj3f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,17))
+                .lineToConstantHeading (new Vector2d(0,18))
 
                 .build();
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(-10,0))
+                .lineToConstantHeading (new Vector2d(-15,0))
+
+                .build();
+        Trajectory traj1gg = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-30,0))
+
+                .build();
+        Trajectory traj1h = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(15,0))
 
                 .build();
         Trajectory traj3g = drive.trajectoryBuilder(new Pose2d())
@@ -455,14 +465,17 @@ public class BFAPT_RIght extends LinearOpMode {
             sleep(300);
             resetRuntime();
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj2f);
+            drive.followTrajectory(traj3f);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1h);
             intakeMove.setPower(1);
             intakeRotate.setPower(0.1);
             sleep(1300);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1g);
+            sleep(5000);
+            drive.followTrajectory(traj1gg);
 
 
 

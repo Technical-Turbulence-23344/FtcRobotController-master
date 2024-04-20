@@ -380,6 +380,7 @@ public class RBAPT_Edge_Stack extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            sleep(5000);
             intakeMove.setPower(0);
             if (auto == 2 || auto == 1) {
                 telemetry.addData("auto", auto);

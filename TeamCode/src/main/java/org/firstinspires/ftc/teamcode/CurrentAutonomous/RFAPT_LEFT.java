@@ -120,7 +120,7 @@ public class RFAPT_LEFT extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence trajSeq2 =drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(new Pose2d(-37.5,0, Math.toRadians(90)))
+                .lineToSplineHeading(new Pose2d(-37.5,2, Math.toRadians(90)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> intakeMove.setPower(0))
                 .forward(6)
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> intakeMove.setPower(-0.5))
@@ -176,7 +176,7 @@ public class RFAPT_LEFT extends LinearOpMode {
                 .build();
         Trajectory traj1f = drive.trajectoryBuilder(new Pose2d())
 
-                .lineToConstantHeading (new Vector2d(0,-16))
+                .lineToConstantHeading (new Vector2d(0,-19))
 
                 .build();
         Trajectory traj2f = drive.trajectoryBuilder(new Pose2d())
@@ -192,6 +192,16 @@ public class RFAPT_LEFT extends LinearOpMode {
         Trajectory traj1g = drive.trajectoryBuilder(new Pose2d())
 
                 .lineToConstantHeading (new Vector2d(-10,0))
+
+                .build();
+        Trajectory traj1gg = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(-25,0))
+
+                .build();
+        Trajectory traj1h = drive.trajectoryBuilder(new Pose2d())
+
+                .lineToConstantHeading (new Vector2d(15,0))
 
                 .build();
         Trajectory traj2a = drive.trajectoryBuilder(new Pose2d())
@@ -246,11 +256,7 @@ public class RFAPT_LEFT extends LinearOpMode {
                 .build();
         boolean d= true;
         while (!opModeIsActive()) {
-            telemetry.addData("DS preview on/off","3 dots, Camera Stream");
-            telemetry.addLine();
-            telemetry.addLine("----------------------------------------");
-            telemetry.addData("auto",auto);
-            telemetry.update();
+           telemetryTfod();
         }
 
 
@@ -293,7 +299,7 @@ public class RFAPT_LEFT extends LinearOpMode {
 
                         if (idforapril == 4) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-2, yforlast+0.5))
 
                                     .build();
                             hello = true;
@@ -329,13 +335,16 @@ public class RFAPT_LEFT extends LinearOpMode {
             resetRuntime();
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             drive.followTrajectory(traj1f);
+            drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+            drive.followTrajectory(traj1h);
             intakeMove.setPower(1);
             intakeRotate.setPower(0.1);
             sleep(1300);
             intakeMove.setPower(0);
             intakeRotate.setPower(0);
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
-            drive.followTrajectory(traj1g);
+            sleep(7000);
+            drive.followTrajectory(traj1gg);
 
 
         }
@@ -353,7 +362,7 @@ public class RFAPT_LEFT extends LinearOpMode {
 
                         if (idforapril == 5) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-2, yforlast-0.5))
 
                                     .build();
                             hello = true;
@@ -410,7 +419,7 @@ public class RFAPT_LEFT extends LinearOpMode {
 
                         if (idforapril == 6) {
                             trajApril = drive.trajectoryBuilder(new Pose2d())
-                                    .lineToConstantHeading(new Vector2d(xforlast, yforlast))
+                                    .lineToConstantHeading(new Vector2d(xforlast-2, yforlast+0.5))
 
                                     .build();
                             hello = true;
@@ -496,17 +505,19 @@ public class RFAPT_LEFT extends LinearOpMode {
                     idle();
                 }
 
-            telemetry.addData("auto",auto);
+                telemetry.addData("auto",auto);
                 telemetry.addData("confonf",recognition.getConfidence());
+                telemetry.update();
             }   // end for() loop
-            telemetry.addData("auto",auto);
+
         }else {
             auto =1;
+            telemetry.addData("auto",auto);
+            telemetry.update();
         }
 
-        telemetry.addData("auto",auto);
 
-    }   // end method telemetryTfod()
+    }
     private void initDoubleVision() {
         // -----------------------------------------------------------------------------------------
         // AprilTag Configuration

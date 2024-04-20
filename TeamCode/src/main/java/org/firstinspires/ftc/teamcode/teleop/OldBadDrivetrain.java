@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -15,11 +15,10 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.drive.opmode.LinearSlidePosition;
+
 
 @TeleOp
-public class Drivetrain4 extends LinearOpMode {
+public class OldBadDrivetrain extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Declare our motors
@@ -69,11 +68,16 @@ public class Drivetrain4 extends LinearOpMode {
         double colorRuntime = 0.0;
         double colorWaittime = 0.0;
         boolean waitOver = false;
+        boolean mosaicMoverToggle = false;
         double aRunTime = 0.0;
         double bRunTime = 0.0;
         double mRunTime = 0.0;
         double nRunTime = 0.0;
-        boolean mmyes = false;
+
+        GamepadEx g2 = new GamepadEx(gamepad2);
+        GamepadEx g1 = new GamepadEx(gamepad1);
+
+
         linearSlideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         linearSlideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeMove.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -89,22 +93,26 @@ public class Drivetrain4 extends LinearOpMode {
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        double currentPositionLin = (-1)*LinearSlidePosition.pos +100;
+        double currentPositionLin = 100;
         boolean linearSlideMode = false;
         boolean prevState = false;
-        double mmRuntime  = 0.0;
-        double mmbRuntime = 0.0;
         String intendedColor = "red";
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
-        // Set your initial pose to x: 10, y: 10, facing 90 degrees
-        drive.setPoseEstimate(new Pose2d(10, 10, Math.toRadians(90)));
         boolean hello = false;
+
+        ToggleButtonReader mosaicToggle = new ToggleButtonReader(
+                g2, GamepadKeys.Button.START
+        );
+
+        ToggleButtonReader droneToggle = new ToggleButtonReader(
+                g1, GamepadKeys.Button.START
+        );
+        double mmRt =-5.0;
+
         waitForStart();
 
 
@@ -128,16 +136,16 @@ public class Drivetrain4 extends LinearOpMode {
             if (((DistanceSensor) color1).getDistance(DistanceUnit.INCH)<0.7){
                 isPixelIn1 = true;
             }
-            if ((isPixelIn1)&&(greenPercentage>40)&&(greenPercentage<46)&&(redPercentage>20)&&(redPercentage<26)&&(bluePercentage>29)&&(bluePercentage<35)){
+            if ((isPixelIn1)&&(greenPercentage>39)&&(greenPercentage<43)&&(redPercentage>20)&&(redPercentage<24)&&(bluePercentage>34)&&(bluePercentage<38)){
                 colorIn1 = "white!";
             }
-            if ((isPixelIn1)&&(greenPercentage>47)&&(greenPercentage<52)&&(redPercentage>28)&&(redPercentage<34)&&(bluePercentage>16)&&(bluePercentage<22)){
+            if ((isPixelIn1)&&(greenPercentage>45)&&(greenPercentage<51)&&(redPercentage>28)&&(redPercentage<34)&&(bluePercentage>16)&&(bluePercentage<22)){
                 colorIn1 = "yellow!";
             }
-            if ((isPixelIn1)&&(greenPercentage>34)&&(greenPercentage<40)&&(redPercentage>21)&&(redPercentage<25)&&(bluePercentage>37)&&(bluePercentage<42)){
+            if ((isPixelIn1)&&(greenPercentage>31)&&(greenPercentage<37)&&(redPercentage>19)&&(redPercentage<25)&&(bluePercentage>41)&&(bluePercentage<47)){
                 colorIn1 = "purple!";
             }
-            if ((isPixelIn1)&&(greenPercentage>49)&&(greenPercentage<55)&&(redPercentage>17)&&(redPercentage<23)&&(bluePercentage>23)&&(bluePercentage<29)){
+            if ((isPixelIn1)&&(greenPercentage>49)&&(greenPercentage<55)&&(redPercentage>16)&&(redPercentage<22)&&(bluePercentage>25)&&(bluePercentage<31)){
                 colorIn1 = "green!";
             }
             //Color sensor 2
@@ -195,10 +203,7 @@ public class Drivetrain4 extends LinearOpMode {
                     .addData("Green", "%.3f", greenPercentage2)
                     .addData("Blue", "%.3f", bluePercentage2);
             telemetry.update();
-            drive.update();
 
-            // Retrieve your pose
-            Pose2d myPose = drive.getPoseEstimate();
 
 
 
@@ -212,17 +217,17 @@ public class Drivetrain4 extends LinearOpMode {
             double turbo = 0.8 + 0.2 * gamepad1.right_trigger - 0.6 * gamepad1.left_trigger;
             //Y button controller 1
             if (gamepad1.right_stick_y > 0.3 || gamepad1.right_stick_y < -0.3) {
-                y = -gamepad1.right_stick_y * turbo; // Remember, Y stick value is reversed
+                y = -g1.getRightY() * turbo; // Remember, Y stick value is reversed
             } else {
                 y = 0;
             }
             //X button controller 1
             if (gamepad1.right_stick_x > 0.5 || gamepad1.right_stick_x < -0.5) {
-                x = gamepad1.right_stick_x * 1.3 * turbo; // Counteract imperfect strafing
+                x = g1.getRightX() * 1.3 * turbo; // Counteract imperfect strafing
             } else {
                 x = 0;
             }
-            double rx = gamepad1.left_stick_x * turbo;
+            double rx = g1.getLeftX() * turbo;
 
 
             // Denominator is the largest motor power (absolute value) or 1
@@ -329,25 +334,27 @@ public class Drivetrain4 extends LinearOpMode {
                 toes = true;
                 mRunTime = getRuntime();
             }
-            if (gamepad1.start) {
+            if (droneToggle.getState()){
                 droneLauncher.setPower(1);
+            } else {
+                droneLauncher.setPower(0);
             }
-            if (gamepad2.start){
+            droneToggle.readValue();
+
+
+            if(mosaicToggle.getState()){
                 mosaicMover.setPower(1);
-            }
-            if (gamepad2.back){
-                mmRuntime = getRuntime();
-                mmyes = true;
-            }
-            if(mmyes && !gamepad2.back){
-                mmbRuntime = getRuntime()-mmRuntime;
-                if (mmbRuntime<1.0){
+            } else {
+                if (mosaicToggle.stateJustChanged()){
+                    mmRt = getRuntime();
+                }
+                if ((getRuntime()-mmRt)<1.5){
                     mosaicMover.setPower(-1);
                 } else {
                     mosaicMover.setPower(0);
-                    mmyes = false;
                 }
             }
+            mosaicToggle.readValue();
 
             if (gamepad2.left_stick_y>0) {
                 intakeRotate.setPower(0.1);
@@ -427,21 +434,20 @@ public class Drivetrain4 extends LinearOpMode {
             }
             if (isOn && !gamepad1.back) {
                 currentRuntime = getRuntime();
-                if (currentRuntime < 1.5) {
+                if (currentRuntime < 2) {
                     linActServo.setPower(1);
-                } else if (currentRuntime < 2.5) {
+                } else if (currentRuntime < 3) {
                     linActServo.setPower(0);
                     linearActuator.setPower(1);
-                } else if (currentRuntime < 6.5) {
+                } else if (currentRuntime < 7) {
                     linearActuator.setPower(0);
-                    linActServo.setPower(-0.3);
-                } else if (currentRuntime < 7.5) {
+                    linActServo.setPower(-1);
+                } else if (currentRuntime < 8) {
                     linActServo.setPower(1);
                 } else {
                     linActServo.setPower(0);
                     linearActuator.setPower(0);
                 }
-                //+0.5
 
 
                 if (gamepad1.x) {
@@ -477,4 +483,3 @@ public class Drivetrain4 extends LinearOpMode {
         }
     }
 }
-

@@ -862,8 +862,8 @@ public class RBAPT_SPEED extends LinearOpMode {
             drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
             sleep(800);
             drive.followTrajectory(trajddd);
-            linearSlideLeft.setPower(-1);
-            linearSlideRight.setPower(-1);
+            linearSlideLeft.setPower(-0.7); //-1
+            linearSlideRight.setPower(-0.7); // -1
             sleep(1000);
             linearSlideLeft.setPower(0);
             linearSlideRight.setPower(0);
